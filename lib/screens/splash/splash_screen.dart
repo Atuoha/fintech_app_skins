@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../components/kElevatedButton.dart';
 import '../../constants/color.dart';
 import '../auth/signup.dart';
 
@@ -50,21 +51,6 @@ class _SplashScreenState extends State<SplashScreen> {
         });
         break;
     }
-  }
-
-  Widget kElevatedButton() {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: ElevatedButton.icon(
-        style: ElevatedButton.styleFrom(
-          primary: primaryColor,
-          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 15),
-        ),
-        onPressed: () => splashAction(Operation.goFront),
-        icon: const Icon(Icons.chevron_left),
-        label: const Text('Next'),
-      ),
-    );
   }
 
   Widget kTextButton() {
@@ -185,13 +171,23 @@ class _SplashScreenState extends State<SplashScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   kTextButton(),
-                  kElevatedButton(),
+                  kElevatedButton(
+                    title: 'Next',
+                    icon: Icons.chevron_left,
+                    action: splashAction(Operation.goFront),
+                  ),
                 ],
               ),
             ] else if (splashIndex == 0) ...[
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: [kElevatedButton()],
+                children: [
+                  kElevatedButton(
+                    title: 'Next',
+                    icon: Icons.chevron_left,
+                    action: splashAction(Operation.goFront),
+                  ),
+                ],
               )
             ] else ...[
               Padding(

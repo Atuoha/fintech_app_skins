@@ -1,5 +1,10 @@
+import 'dart:async';
+
+import 'package:fintech_app_ui/screens/auth/verify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import '../../components/kElevatedButton.dart';
 import '../../constants/color.dart';
 
 class Signup extends StatefulWidget {
@@ -14,13 +19,15 @@ class Signup extends StatefulWidget {
 enum Field { name, email, phone, password, pin }
 
 class _SignupState extends State<Signup> {
-  final formKey = GlobalKey<FormState>();
-  final fullNameController = TextEditingController();
-  final emailController = TextEditingController();
-  final phoneNumberController = TextEditingController();
-  final passwordController = TextEditingController();
-  final securityPinController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final _fullNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _phoneNumberController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _securityPinController = TextEditingController();
   var obscure = true;
+  var loading = false;
+  final double kSize = 100;
 
   toggleObscure() {
     setState(() {
@@ -72,7 +79,7 @@ class _SignupState extends State<Signup> {
                   : TextInputType.text,
       decoration: InputDecoration(
         suffixIcon: field == Field.password
-            ? passwordController.text.isNotEmpty
+            ? _passwordController.text.isNotEmpty
                 ? IconButton(
                     onPressed: () => setState(() {
                       obscure = !obscure;
@@ -112,10 +119,23 @@ class _SignupState extends State<Signup> {
   @override
   void initState() {
     // TODO: implement initState
-    passwordController.addListener(() {
+    _passwordController.addListener(() {
       setState(() {});
     });
     super.initState();
+  }
+
+  _submitForm(BuildContext context) {
+    setState(() {
+      loading = true;
+    });
+    var valid = _formKey.currentState!.validate();
+    if (!valid) return null;
+
+    // TODO : implement Registration
+    Timer(const Duration(seconds: 5), () {
+      Navigator.of(context).pushNamed(VerificationScreen.routeName);
+    });
   }
 
   @override
@@ -145,20 +165,57 @@ class _SignupState extends State<Signup> {
                 style: TextStyle(color: primaryColor),
               ),
               const SizedBox(height: 20),
-              kTextField(
-                  fullNameController, Field.name, 'FullName', 'Ujunwa Peace'),
-              const SizedBox(height: 20),
-              kTextField(emailController, Field.email, 'Email Address',
-                  'ujunwa001@gmail.com'),
-              const SizedBox(height: 20),
-              kTextField(
-                  phoneNumberController, Field.phone, 'Phone', '23480000000'),
-              const SizedBox(height: 20),
-              kTextField(
-                  passwordController, Field.password, 'Password', '********'),
-              const SizedBox(height: 20),
-              kTextField(securityPinController, Field.pin,
-                  'Security Pin (4 digits)', '0000'),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    kTextField(
+                      _fullNameController,
+                      Field.name,
+                      'FullName',
+                      'Ujunwa Peace',
+                    ),
+                    const SizedBox(height: 20),
+                    kTextField(
+                      _emailController,
+                      Field.email,
+                      'Email Address',
+                      'ujunwa001@gmail.com',
+                    ),
+                    const SizedBox(height: 20),
+                    kTextField(
+                      _phoneNumberController,
+                      Field.phone,
+                      'Phone',
+                      '23480000000',
+                    ),
+                    const SizedBox(height: 20),
+                    kTextField(
+                      _passwordController,
+                      Field.password,
+                      'Password',
+                      '********',
+                    ),
+                    const SizedBox(height: 20),
+                    kTextField(
+                      _securityPinController,
+                      Field.pin,
+                      'Security Pin (4 digits)',
+                      '0000',
+                    ),
+                  ],
+                ),
+              ),
+              loading
+                  ? LoadingAnimationWidget.fourRotatingDots(
+                      color: Colors.white,
+                      size: kSize,
+                    )
+                  : kElevatedButton(
+                      title: 'Continue',
+                      icon: Icons.chevron_left,
+                      action: _submitForm(context),
+                    ),
             ],
           ),
         ),

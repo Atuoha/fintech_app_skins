@@ -1,5 +1,6 @@
 import 'package:fintech_app_ui/constants/color.dart';
 import 'package:fintech_app_ui/screens/auth/signup.dart';
+import 'package:fintech_app_ui/screens/auth/verify.dart';
 import 'package:fintech_app_ui/screens/splash/entry_screen.dart';
 import 'package:fintech_app_ui/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class FinTechApp extends StatelessWidget {
       routes: {
         SplashScreen.routeName: (context) => const SplashScreen(),
         Signup.routeName: (context)=> const Signup(),
+        VerificationScreen.routeName: (context)=>const VerificationScreen()
       },
     );
   }
