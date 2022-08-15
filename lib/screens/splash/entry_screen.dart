@@ -19,7 +19,7 @@ class _EntryScreenState extends State<EntryScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    Timer(const Duration(seconds: 50), () {
+    Timer(const Duration(seconds: 10), () {
       Navigator.of(context).pushNamed(SplashScreen.routeName);
     });
     super.initState();
@@ -36,10 +36,10 @@ class _EntryScreenState extends State<EntryScreen> {
       color: primaryColor,
       constraints: const BoxConstraints.expand(),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('assets/image/logo.png'),
-          const SizedBox(height: 20),
+          Image.asset('assets/images/logo.png'),
+          const SizedBox(height: 10),
           LoadingAnimationWidget.flickr(
             leftDotColor: masterRed,
             rightDotColor: masterYellow,

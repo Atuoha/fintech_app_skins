@@ -12,6 +12,7 @@ class FinTechApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Poppins'),
       title: 'Fintech App',
       home: const EntryScreen(),

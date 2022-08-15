@@ -18,18 +18,18 @@ class _SplashScreenState extends State<SplashScreen> {
 
   final splashContents = [
     {
-      'image': 'assets/images/sp_image1',
+      'image': 'assets/images/sp_img1.png',
       'title': 'Virtual Card',
       'content':
           'Get your virtual card in 5 minutes \n make international transactions.',
     },
     {
-      'image': 'assets/images/sp_image2',
+      'image': 'assets/images/sp_img2.png',
       'title': 'Fund Easily',
       'content': 'Fund your wallet from your bank \n account without hassle.',
     },
     {
-      'image': 'assets/images/sp_image3',
+      'image': 'assets/images/sp_img3.png',
       'title': 'Make Subscriptions',
       'content': 'Make subscriptions to any \n platform without limits',
     },
@@ -39,27 +39,64 @@ class _SplashScreenState extends State<SplashScreen> {
     switch (operation) {
       case Operation.goFront:
         setState(() {
-          splashIndex += splashIndex;
+          splashIndex += 1;
         });
         break;
 
       case Operation.goBack:
         setState(() {
-          splashIndex -= splashIndex;
+          splashIndex -= 1;
         });
         break;
     }
   }
 
+  Widget kElevatedButton() {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: ElevatedButton.icon(
+        style: ElevatedButton.styleFrom(
+          primary: primaryColor,
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 15),
+        ),
+        onPressed: () => splashAction(Operation.goFront),
+        icon: const Icon(Icons.chevron_left),
+        label: const Text('Next'),
+      ),
+    );
+  }
+
+  Widget kTextButton() {
+    return TextButton.icon(
+      style: TextButton.styleFrom(
+        padding: const EdgeInsets.all(20),
+      ),
+      onPressed: () => splashAction(Operation.goBack),
+      icon: const Icon(
+        Icons.chevron_left,
+        color: greyShade1,
+      ),
+      label: const Text(
+        'Back',
+        style: TextStyle(
+          color: greyShade1,
+        ),
+      ),
+    );
+  }
+
   Widget counterContainer(int index) {
-    return InkWell(
+    return GestureDetector(
       onTap: () => setState(() {
         splashIndex = index;
       }),
       child: Container(
-        height: 20,
+        margin: const EdgeInsets.all(2),
+        height: 12,
+        width: 30,
         decoration: BoxDecoration(
-          color: splashIndex == index ? masterYellow : greyShade1,
+          borderRadius: BorderRadius.circular(5),
+          color: splashIndex == index ? masterYellow : greyShade2,
         ),
       ),
     );
@@ -76,110 +113,110 @@ class _SplashScreenState extends State<SplashScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        leadingWidth: 100,
         leading: splashIndex > 0
-            ? InkWell(
-                onTap: () => splashAction(Operation.goBack),
-                child: Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: const [
-                    Icon(Icons.chevron_left, color: greyShade2),
-                    SizedBox(width: 5),
-                    Text(
-                      'Back',
+            ? Padding(
+                padding: const EdgeInsets.only(left: 18.0),
+                child: GestureDetector(
+                    onTap: () => splashAction(Operation.goBack),
+                    child: const Text(
+                      '< Back',
                       style: TextStyle(
-                        color: greyShade2,
+                        color: greyShade1,
                       ),
-                    )
-                  ],
-                ),
+                    )),
               )
             : const Text(''),
         actions: [
-          splashIndex < 3
-              ? InkWell(
-                  onTap: () => splashAction(Operation.goBack),
-                  child: Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: const [
-                      Text(
-                        'Skip',
-                        style: TextStyle(
-                          color: greyShade2,
-                        ),
+          splashIndex < 2
+              ? Padding(
+                  padding: const EdgeInsets.only(right: 18.0),
+                  child: GestureDetector(
+                    onTap: () => setState(() {
+                      splashIndex = splashContents.length -1;
+                    }),
+                    child: const Text(
+                      'Skip >>',
+                      style: TextStyle(
+                        color: greyShade1,
                       ),
-                      SizedBox(width: 5),
-                      Icon(Icons.chevron_right, color: greyShade2),
-                      Icon(Icons.chevron_right, color: greyShade2),
-                    ],
+                    ),
                   ),
                 )
               : const Text(''),
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(splashContents[splashIndex]['image']!),
-          const SizedBox(height: 10),
-          Text(
-            splashContents[splashIndex]['title']!,
-            style: const TextStyle(
-              color: primaryColor,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            splashContents[splashIndex]['content']!,
-            style: const TextStyle(
-              color: greyShade1,
-            ),
-          ),
-          const SizedBox(height: 10),
-          SizedBox(
-            height: 20,
-            child: ListView.builder(
-              itemCount: splashContents.length,
-              itemBuilder: (context, index) => counterContainer(index),
-            ),
-          ),
-          if (splashIndex < 3 && splashIndex > 0) ...[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton.icon(
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.all(20),
-                  ),
-                  onPressed: () => splashAction(Operation.goBack),
-                  icon: const Icon(Icons.chevron_left),
-                  label: const Text('Back'),
-                ),
-                ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    primary: primaryColor,
-                    padding: const EdgeInsets.all(20),
-                  ),
-                  onPressed: () => splashAction(Operation.goFront),
-                  icon: const Icon(Icons.chevron_left),
-                  label: const Text('Back'),
-                )
-              ],
-            ),
-          ] else ...[
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: primaryColor,
+      body: Padding(
+        padding: const EdgeInsets.all(18),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(splashContents[splashIndex]['image']!),
+            const SizedBox(height: 10),
+            Text(
+              splashContents[splashIndex]['title']!,
+              style: const TextStyle(
+                color: primaryColor,
+                fontWeight: FontWeight.bold,
               ),
-              onPressed: null,
-              child: const Text('Get Started'),
             ),
-            ElevatedButton(
-              // style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(border:)),
-              onPressed: null, child: Text('Get Started'),
+            const SizedBox(height: 10),
+            Text(
+              splashContents[splashIndex]['content']!,
+              style: const TextStyle(
+                color: greyShade1,
+              ),
             ),
-          ]
-        ],
+            const SizedBox(height: 10),
+            SizedBox(
+                height: 12,
+                width: 100,
+                child: Center(
+                  child: ListView.builder(
+
+                    scrollDirection: Axis.horizontal,
+                    itemCount: splashContents.length,
+                    itemBuilder: (context, index) => counterContainer(index),
+                  ),
+                ),
+            ),
+            if (splashIndex < 2 && splashIndex > 0) ...[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  kTextButton(),
+                  kElevatedButton(),
+                ],
+              ),
+            ] else if (splashIndex == 0) ...[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [kElevatedButton()],
+              )
+            ] else ...[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: primaryColor,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 22,
+                          vertical: 15,
+                        ),
+                      ),
+                      onPressed: () => {},
+                      child: const Text('Get Started'),
+                    ),
+                  ],
+                ),
+              ),
+            ]
+          ],
+        ),
       ),
     );
   }
