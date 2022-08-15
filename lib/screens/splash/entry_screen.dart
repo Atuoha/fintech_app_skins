@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:fintech_app_ui/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../constants/color.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -26,6 +27,11 @@ class _EntryScreenState extends State<EntryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ),
+    );
     return Container(
       color: primaryColor,
       constraints: const BoxConstraints.expand(),
