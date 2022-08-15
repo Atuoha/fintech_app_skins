@@ -1,3 +1,4 @@
+import 'package:fintech_app_ui/constants/color.dart';
 import 'package:fintech_app_ui/screens/auth/signup.dart';
 import 'package:fintech_app_ui/screens/splash/entry_screen.dart';
 import 'package:fintech_app_ui/screens/splash/splash_screen.dart';
@@ -14,7 +15,7 @@ class FinTechApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'Poppins'),
+      theme: ThemeData(fontFamily: 'Poppins',primaryColor: primaryColor),
       title: 'Fintech App',
       home: const EntryScreen(),
       routes: {
