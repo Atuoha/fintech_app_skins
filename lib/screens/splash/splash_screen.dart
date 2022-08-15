@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../constants/color.dart';
+import '../auth/signup.dart';
 
 class SplashScreen extends StatefulWidget {
   static const routeName = '/splash';
@@ -133,7 +134,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   padding: const EdgeInsets.only(right: 18.0),
                   child: GestureDetector(
                     onTap: () => setState(() {
-                      splashIndex = splashContents.length -1;
+                      splashIndex = splashContents.length - 1;
                     }),
                     child: const Text(
                       'Skip >>',
@@ -169,16 +170,15 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             const SizedBox(height: 10),
             SizedBox(
-                height: 12,
-                width: 100,
-                child: Center(
-                  child: ListView.builder(
-
-                    scrollDirection: Axis.horizontal,
-                    itemCount: splashContents.length,
-                    itemBuilder: (context, index) => counterContainer(index),
-                  ),
+              height: 12,
+              width: 100,
+              child: Center(
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: splashContents.length,
+                  itemBuilder: (context, index) => counterContainer(index),
                 ),
+              ),
             ),
             if (splashIndex < 2 && splashIndex > 0) ...[
               Row(
@@ -208,7 +208,11 @@ class _SplashScreenState extends State<SplashScreen> {
                           vertical: 15,
                         ),
                       ),
-                      onPressed: () => {},
+                      onPressed: () => Navigator.of(
+                        context,
+                      ).pushNamed(
+                        Signup.routeName,
+                      ),
                       child: const Text('Get Started'),
                     ),
                   ],
