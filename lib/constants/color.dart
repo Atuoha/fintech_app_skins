@@ -10,3 +10,5 @@ const fundWalletBg = Color(0XFFCCE4CD);
 const withdrawBg = Color(0XFFE9CCCC);
 const greyShade1 = Color(0XFF8D8D8D);
 const greyShade2 = Color(0XFFCFCFCF);
+const masterRed = Color(0XFFEA001B);
+const masterYellow = Color(0XFFF79E1C);

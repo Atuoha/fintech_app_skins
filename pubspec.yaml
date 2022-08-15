@@ -1,5 +1,5 @@
 name: fintech_app_ui
-description: Fintech App UI using a prototype on Behance by Tonia Reuben
+description: Fintech App Skin using a prototype on Behance by Tonia Reuben
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -35,6 +35,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   provider: ^6.0.3
+  loading_animation_widget: ^1.2.0+2
 
 dev_dependencies:
   flutter_test:
