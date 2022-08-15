@@ -29,11 +29,7 @@ class _SignupState extends State<Signup> {
   var loading = false;
   final double kSize = 100;
 
-  toggleObscure() {
-    setState(() {
-      obscure != obscure;
-    });
-  }
+
 
   // textfield for all inputs
   Widget kTextField(TextEditingController controller, Field field, String label,
@@ -68,7 +64,6 @@ class _SignupState extends State<Signup> {
       },
       // maxLength: field == Field.pin ?4:40,
       controller: controller,
-
       obscureText: field == Field.password ? obscure : false,
       keyboardType: field == Field.email
           ? TextInputType.emailAddress
@@ -126,11 +121,14 @@ class _SignupState extends State<Signup> {
   }
 
   _submitForm(BuildContext context) {
-    setState(() {
-      loading = true;
-    });
     var valid = _formKey.currentState!.validate();
-    if (!valid) return null;
+    if (!valid){
+      return null;
+    }else{
+      setState(() {
+        loading = true;
+      });
+    }
 
     // TODO : implement Registration
     Timer(const Duration(seconds: 5), () {
@@ -180,14 +178,14 @@ class _SignupState extends State<Signup> {
                       _fullNameController,
                       Field.name,
                       'FullName',
-                      'Ujunwa Peace',
+                      'User',
                     ),
                     const SizedBox(height: 20),
                     kTextField(
                       _emailController,
                       Field.email,
                       'Email Address',
-                      'ujunwa001@gmail.com',
+                      'user@gmail.com',
                     ),
                     const SizedBox(height: 20),
                     kTextField(
@@ -217,7 +215,7 @@ class _SignupState extends State<Signup> {
               loading
                   ? Center(
                       child: LoadingAnimationWidget.fourRotatingDots(
-                        color: Colors.white,
+                        color: primaryColor,
                         size: kSize,
                       ),
                     )
