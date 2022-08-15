@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
     },
   ];
 
-  splashAction(Operation operation) {
+   splashAction(Operation operation) {
     switch (operation) {
       case Operation.goFront:
         setState(() {
@@ -51,6 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
         });
         break;
     }
+
   }
 
   Widget kTextButton() {
@@ -171,10 +172,10 @@ class _SplashScreenState extends State<SplashScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   kTextButton(),
-                  kElevatedButton(
+                  KElevatedButton(
                     title: 'Next',
                     icon: Icons.chevron_left,
-                    action: splashAction(Operation.goFront),
+                    action: ()=>splashAction(Operation.goFront),
                   ),
                 ],
               ),
@@ -182,10 +183,10 @@ class _SplashScreenState extends State<SplashScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  kElevatedButton(
+                  KElevatedButton(
                     title: 'Next',
                     icon: Icons.chevron_left,
-                    action: splashAction(Operation.goFront),
+                    action: ()=>splashAction(Operation.goFront),
                   ),
                 ],
               )

@@ -134,7 +134,11 @@ class _SignupState extends State<Signup> {
 
     // TODO : implement Registration
     Timer(const Duration(seconds: 5), () {
-      Navigator.of(context).pushNamed(VerificationScreen.routeName);
+      Navigator.of(
+        context,
+      ).pushNamed(
+        VerificationScreen.routeName,
+      );
     });
   }
 
@@ -147,10 +151,13 @@ class _SignupState extends State<Signup> {
     );
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 45, horizontal: 18),
+        padding: const EdgeInsets.symmetric(
+          vertical: 55,
+          horizontal: 18,
+        ),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Text(
                 'Welcome,',
@@ -164,7 +171,7 @@ class _SignupState extends State<Signup> {
                 'Create your account to get started',
                 style: TextStyle(color: primaryColor),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               Form(
                 key: _formKey,
                 child: Column(
@@ -206,15 +213,18 @@ class _SignupState extends State<Signup> {
                   ],
                 ),
               ),
+              const SizedBox(height: 20),
               loading
-                  ? LoadingAnimationWidget.fourRotatingDots(
-                      color: Colors.white,
-                      size: kSize,
+                  ? Center(
+                      child: LoadingAnimationWidget.fourRotatingDots(
+                        color: Colors.white,
+                        size: kSize,
+                      ),
                     )
-                  : kElevatedButton(
+                  : KElevatedButton(
                       title: 'Continue',
                       icon: Icons.chevron_left,
-                      action: _submitForm(context),
+                      action: () => _submitForm(context),
                     ),
             ],
           ),

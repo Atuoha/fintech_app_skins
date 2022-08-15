@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../constants/color.dart';
 
-class kElevatedButton extends StatelessWidget {
-  const kElevatedButton({
+class KElevatedButton extends StatelessWidget {
+  const KElevatedButton({
     Key? key,
     required this.title,
     required this.icon,
@@ -10,7 +10,7 @@ class kElevatedButton extends StatelessWidget {
   }) : super(key: key);
   final String title;
   final IconData icon;
-  final Function action;
+  final Function() action;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class kElevatedButton extends StatelessWidget {
             vertical: 15,
           ),
         ),
-        onPressed: () => action(),
+        onPressed: action,
         icon: Icon(icon),
         label: Text(title),
       ),
