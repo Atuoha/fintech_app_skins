@@ -64,7 +64,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   if (value!.isEmpty || !value.contains('@')) {
                     return 'Email is not valid';
                   }
-
                   return null;
                 },
                 controller: _emailController,
