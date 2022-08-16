@@ -1,9 +1,11 @@
 import 'dart:async';
-
+import 'package:fintech_app_ui/screens/auth/signin.dart';
 import 'package:fintech_app_ui/screens/auth/verify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import '../../components/auth_header.dart';
+import '../../components/inline_text_buttton.dart';
 import '../../components/kElevatedButton.dart';
 import '../../constants/color.dart';
 
@@ -28,8 +30,6 @@ class _SignupState extends State<Signup> {
   var obscure = true;
   var loading = false;
   final double kSize = 100;
-
-
 
   // textfield for all inputs
   Widget kTextField(TextEditingController controller, Field field, String label,
@@ -122,9 +122,9 @@ class _SignupState extends State<Signup> {
 
   _submitForm(BuildContext context) {
     var valid = _formKey.currentState!.validate();
-    if (!valid){
+    if (!valid) {
       return null;
-    }else{
+    } else {
       setState(() {
         loading = true;
       });
@@ -155,19 +155,11 @@ class _SignupState extends State<Signup> {
         ),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Welcome,',
-                style: TextStyle(
-                  color: primaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                ),
-              ),
-              const Text(
-                'Create your account to get started',
-                style: TextStyle(color: primaryColor),
+              const AuthHeader(
+                header: 'Welcome,',
+                content: 'Create your account to get started',
               ),
               const SizedBox(height: 40),
               Form(
@@ -219,10 +211,21 @@ class _SignupState extends State<Signup> {
                         size: kSize,
                       ),
                     )
-                  : KElevatedButton(
-                      title: 'Continue',
-                      icon: Icons.chevron_left,
-                      action: () => _submitForm(context),
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        KElevatedButton(
+                          title: 'Continue',
+                          icon: Icons.chevron_left,
+                          action: () => _submitForm(context),
+                        ),
+                        const SizedBox(height: 10),
+                        const InlineTextButton(
+                          routeName: Signin.routeName,
+                          firstText: 'Already have an account? ',
+                          secondText: 'Sign in',
+                        )
+                      ],
                     ),
             ],
           ),
