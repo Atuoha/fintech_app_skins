@@ -56,7 +56,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               const AuthHeader(
                 header: 'Account Verification',
                 content:
-                    'Please enter the 4 digits verification code \n sent to you using 830*********456',
+                    'Please enter the 4 digits verification code \n sent to you using 23481*********267',
               ),
               const SizedBox(height: 40),
               // TODO: Implement verification pin
