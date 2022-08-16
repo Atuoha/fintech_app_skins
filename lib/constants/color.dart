@@ -12,3 +12,4 @@ const greyShade1 = Color(0XFF8D8D8D);
 const greyShade2 = Color(0XFFCFCFCF);
 const masterRed = Color(0XFFEA001B);
 const masterYellow = Color(0XFFF79E1C);
+var hoverColor = const Color(0XFF083E9E).withOpacity(0.1);

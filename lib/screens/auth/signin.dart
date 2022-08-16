@@ -7,6 +7,7 @@ import '../../components/auth_header.dart';
 import '../../components/inline_text_buttton.dart';
 import '../../components/kElevatedButton.dart';
 import '../../constants/color.dart';
+import '../main/bottom_nav.dart';
 import 'forgot_password.dart';
 
 class Signin extends StatefulWidget {
@@ -119,7 +120,7 @@ class _SigninState extends State<Signin> {
     Timer(const Duration(seconds: 5), () {
       Navigator.of(
         context,
-      ).pushNamed('');
+      ).pushNamed(BottomNav.routeName);
     });
   }
 

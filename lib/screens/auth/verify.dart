@@ -19,8 +19,6 @@ class VerificationScreen extends StatefulWidget {
 
 class _VerificationScreenState extends State<VerificationScreen> {
   TextEditingController textEditingController = TextEditingController();
-
-  // ignore: close_sinks
   StreamController<ErrorAnimationType>? errorController;
 
   bool hasError = false;
@@ -36,7 +34,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
   @override
   void dispose() {
     errorController!.close();
-
     super.dispose();
   }
 
@@ -45,18 +42,24 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
   //verification
   _verify() {
-    setState(() {
-      loading = true;
-    });
-    // TODO implement verification
+    var valid = _formKey.currentState!.validate();
+    if (!valid) {
+      return null;
+    } else {
+      setState(() {
+        loading = true;
+      });
 
-    Timer(const Duration(seconds: 5), () {
-      Navigator.of(
-        context,
-      ).pushNamed(
-        Signin.routeName,
-      );
-    });
+      // TODO implement verification
+
+      Timer(const Duration(seconds: 5), () {
+        Navigator.of(
+          context,
+        ).pushNamed(
+          Signin.routeName,
+        );
+      });
+    }
   }
 
   @override
@@ -85,73 +88,70 @@ class _VerificationScreenState extends State<VerificationScreen> {
               Form(
                 key: _formKey,
                 child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8.0,
-                      horizontal: 30,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8.0,
+                    horizontal: 30,
+                  ),
+                  child: PinCodeTextField(
+                    appContext: context,
+                    pastedTextStyle: const TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.bold,
                     ),
-                    child: PinCodeTextField(
-
-                      appContext: context,
-                      pastedTextStyle: const TextStyle(
-                        color: primaryColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      length: 4,
-                      obscureText: true,
-                      obscuringCharacter: '*',
-
-                      blinkWhenObscuring: true,
-                      animationType: AnimationType.fade,
-                      validator: (v) {
-                        if (v!.length < 3) {
-                          return "Invalid verification pin";
-                        } else {
-                          return null;
-                        }
-                      },
-                      pinTheme: PinTheme(
-                        selectedColor: primaryColor,
-                        selectedFillColor: primaryColor,
-                        errorBorderColor: masterYellow,
-                        disabledColor: masterYellow,
-                        inactiveColor: primaryColor,
-                        activeColor: primaryColor,
-                        shape: PinCodeFieldShape.box,
-                        borderRadius: BorderRadius.circular(5),
-                        fieldHeight: 50,
-                        fieldWidth: 40,
-                        activeFillColor: Colors.white,
-                      ),
-                      cursorColor: Colors.black,
-                      animationDuration: const Duration(milliseconds: 300),
-                      enableActiveFill: true,
-                      errorAnimationController: errorController,
-                      controller: textEditingController,
-                      keyboardType: TextInputType.number,
-                      boxShadows: const [
-                        BoxShadow(
-                          offset: Offset(0, 1),
-                          color: Colors.black12,
-                          blurRadius: 10,
-                        )
-                      ],
-                      onCompleted: (v) {
-                        debugPrint("Completed");
-                      },
-
-                      onChanged: (value) {
-                        debugPrint(value);
-                        setState(() {
-                          currentText = value;
-                        });
-                      },
-                      beforeTextPaste: (text) {
-                        debugPrint("Allowing to paste $text");
-                        return true;
-                      },
-                    )),
+                    length: 4,
+                    obscureText: true,
+                    obscuringCharacter: '*',
+                    blinkWhenObscuring: true,
+                    animationType: AnimationType.fade,
+                    validator: (v) {
+                      if (v!.length < 3) {
+                        return "Invalid verification pin";
+                      } else {
+                        return null;
+                      }
+                    },
+                    pinTheme: PinTheme(
+                      selectedColor: primaryColor,
+                      selectedFillColor: primaryColor,
+                      errorBorderColor: masterYellow,
+                      disabledColor: masterYellow,
+                      inactiveColor: primaryColor,
+                      activeColor: primaryColor,
+                      shape: PinCodeFieldShape.box,
+                      borderRadius: BorderRadius.circular(5),
+                      fieldHeight: 50,
+                      fieldWidth: 40,
+                      activeFillColor: Colors.white,
+                    ),
+                    cursorColor: Colors.black,
+                    animationDuration: const Duration(milliseconds: 300),
+                    enableActiveFill: true,
+                    errorAnimationController: errorController,
+                    controller: textEditingController,
+                    keyboardType: TextInputType.number,
+                    boxShadows: const [
+                      BoxShadow(
+                        offset: Offset(0, 1),
+                        color: Colors.black12,
+                        blurRadius: 10,
+                      )
+                    ],
+                    onCompleted: (v) {
+                      debugPrint("Completed");
+                    },
+                    onChanged: (value) {
+                      debugPrint(value);
+                      setState(() {
+                        currentText = value;
+                      });
+                    },
+                    beforeTextPaste: (text) {
+                      debugPrint("Allowing to paste $text");
+                      return true;
+                    },
+                  ),
+                ),
               ),
-
               Center(
                 child: RichText(
                   text: const TextSpan(
@@ -167,7 +167,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-
               loading
                   ? Center(
                       child: LoadingAnimationWidget.fourRotatingDots(
