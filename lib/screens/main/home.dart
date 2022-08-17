@@ -15,14 +15,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var cardFront = true;
 
-  toggleCardFace(){
+  toggleCardFace() {
     setState(() {
-      cardFront  = !cardFront;
+      cardFront = !cardFront;
     });
   }
 
   Widget kContainer(
-      Color iconBg,
+    Color iconBg,
     Color color,
     String text,
     IconData icon,
@@ -88,18 +88,20 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           const ExchangeContainer(),
-           InkWell(
-             onTap: ()=>toggleCardFace(),
-             child: Center(
-              child: cardFront ? const VirtualCard(
-                cardColor: 'other',
-                cardName: 'Ujunwa Peace',
-                cardNumber: '2345 5678 5432 456',
-                expiry: '07/25',
-                isMaster: true,
-              ): const VirtualCardBack(cvc: 345) ,
+          InkWell(
+            onTap: () => toggleCardFace(),
+            child: Center(
+              child: cardFront
+                  ? const VirtualCardUI(
+                      cardColor: 'other',
+                      cardName: 'Ujunwa Peace',
+                      cardNumber: '2345 5678 5432 456',
+                      expiry: '07/25',
+                      isMaster: true,
+                    )
+                  : const VirtualCardBack(cvc: 345),
+            ),
           ),
-           ),
           const SizedBox(height: 10),
           Center(
             child: Row(
@@ -126,8 +128,14 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          const SizedBox(height:10),
-
+          const SizedBox(height: 10),
+          const Text(
+            'Upcoming Payments',
+            style: TextStyle(
+              color: primaryColor,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ],
       ),
     );

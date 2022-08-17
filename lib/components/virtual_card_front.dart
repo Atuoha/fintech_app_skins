@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class VirtualCard extends StatelessWidget {
-  const VirtualCard({
+class VirtualCardUI extends StatelessWidget {
+  const VirtualCardUI({
     Key? key,
     required this.cardColor,
     required this.cardName,
