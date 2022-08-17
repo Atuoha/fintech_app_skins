@@ -1,9 +1,10 @@
 import 'package:fintech_app_ui/components/exchange_container.dart';
 import 'package:fintech_app_ui/constants/color.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import '../../components/virtual_card_back.dart';
 import '../../components/virtual_card_front.dart';
+import '../../providers/virtual_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // this shows whether the card is showing the front or the back
   var cardFront = true;
 
   toggleCardFace() {
@@ -52,6 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var activeCard = Provider.of<VirtualCardData>(context).getActiveCard();
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 18,
@@ -92,14 +95,14 @@ class _HomeScreenState extends State<HomeScreen> {
             onTap: () => toggleCardFace(),
             child: Center(
               child: cardFront
-                  ? const VirtualCardUI(
-                      cardColor: 'other',
-                      cardName: 'Ujunwa Peace',
-                      cardNumber: '2345 5678 5432 456',
-                      expiry: '07/25',
-                      isMaster: true,
+                  ? VirtualCardUI(
+                      cardColor: activeCard.cardColor,
+                      cardName: activeCard.cardName,
+                      cardNumber: activeCard.cardNumber,
+                      expiry: activeCard.expiry,
+                      isMaster: activeCard.isMaster,
                     )
-                  : const VirtualCardBack(cvc: 345),
+                  : VirtualCardBack(cvc: activeCard.cvc),
             ),
           ),
           const SizedBox(height: 10),
