@@ -6,13 +6,17 @@ class VirtualCardData extends ChangeNotifier {
     for (var card in _cards) {
       card.switchOffIsActive();
     }
-    var kCard = _cards.firstWhere((card) => card.id == id);
+    var kCard = _cards.firstWhere(
+      (card) => card.id == id,
+    );
     kCard.toggleIsActive();
     notifyListeners();
   }
 
   VirtualCard findById(int id) {
-    return _cards.firstWhere((card) => card.id == id);
+    return _cards.firstWhere(
+      (card) => card.id == id,
+    );
   }
 
   getCards() {
@@ -21,13 +25,13 @@ class VirtualCardData extends ChangeNotifier {
 
   final _cards = [
     VirtualCard(
-      id: 1,
-      cardColor: 'red',
-      cardName: 'Ujunwa Peace',
-      cardNumber: '1834 8905 5435 865',
-      expiry: '09/25',
-      cvc: '345',
-    ),
+        id: 1,
+        cardColor: 'red',
+        cardName: 'Ujunwa Peace',
+        cardNumber: '1834 8905 5435 865',
+        expiry: '09/25',
+        cvc: '345',
+        isActive: true),
     VirtualCard(
         id: 2,
         cardColor: 'green',
