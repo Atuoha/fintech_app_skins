@@ -157,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemCount: payments.length,
                     itemBuilder: (context, index) {
                       var todayDate = DateTime.now();
-                      // var daysLeft =   payments[index].date;
+                      var daysLeft =   todayDate.difference(payments[index].date).inDays;
                       return Column(
                         children: [
                           ListTile(
@@ -166,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               payments[index].title,
                               style: const TextStyle(fontWeight: FontWeight.w600),
                             ),
-                            subtitle: Text(payments[index].date.toString()),
+                            subtitle: Text('$daysLeft left'),
                             trailing: Text(
                               'N${payments[index].amount}',
                               style: const TextStyle(fontWeight: FontWeight.w600),
