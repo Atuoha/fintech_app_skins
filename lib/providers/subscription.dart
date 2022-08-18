@@ -8,7 +8,7 @@ class SubscriptionData extends ChangeNotifier {
     );
   }
 
-  getPayments() {
+  getSubscriptions() {
     return [..._subscriptions];
   }
 

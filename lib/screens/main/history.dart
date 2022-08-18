@@ -15,7 +15,7 @@ class HistoryScreen extends StatefulWidget {
 class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
-    Size size =  MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     var historyData = Provider.of<HistoryData>(context);
     return Padding(
       padding: const EdgeInsets.only(
@@ -26,7 +26,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children:  [
+          children: [
             const Text(
               'History',
               style: TextStyle(
@@ -46,7 +46,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
             const SizedBox(height: 15),
             SizedBox(
-              height: size.height *0.2,
+              height: size.height * 0.2,
               child: Card(
                 elevation: 4,
                 child: Padding(
@@ -55,7 +55,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       padding: EdgeInsets.zero,
                       itemCount: historyData.getTodayHistories().length,
                       itemBuilder: (context, index) {
-                        var todayHistory = historyData.getTodayHistories()[index];
+                        var todayHistory =
+                            historyData.getTodayHistories()[index];
                         return Column(
                           children: [
                             ListTile(
@@ -66,7 +67,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-
                               trailing: Text(
                                 'N${todayHistory.amount}',
                                 style: const TextStyle(
@@ -91,38 +91,38 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
             const SizedBox(height: 15),
             SizedBox(
-              height: size.height /2.7,
+              height: size.height / 2.7,
               child: Card(
                 elevation: 4,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      itemCount: historyData.getHistories().length,
-                      itemBuilder: (context, index) {
-                        var todayHistory = historyData.getHistories()[index];
-                        return Column(
-                          children: [
-                            ListTile(
-                              leading: Image.asset(todayHistory.imgAsset),
-                              title: Text(
-                                todayHistory.title,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-
-                              trailing: Text(
-                                'N${todayHistory.amount}',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                ),
+                    padding: EdgeInsets.zero,
+                    itemCount: historyData.getHistories().length,
+                    itemBuilder: (context, index) {
+                      var todayHistory = historyData.getHistories()[index];
+                      return Column(
+                        children: [
+                          ListTile(
+                            leading: Image.asset(todayHistory.imgAsset),
+                            title: Text(
+                              todayHistory.title,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                            const Divider(thickness: 1.0, color: greyShade2),
-                          ],
-                        );
-                      }),
+                            trailing: Text(
+                              'N${todayHistory.amount}',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          const Divider(thickness: 1.0, color: greyShade2),
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
             )

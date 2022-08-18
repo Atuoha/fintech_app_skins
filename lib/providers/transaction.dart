@@ -9,7 +9,7 @@ class TransactionData extends ChangeNotifier {
     );
   }
 
-  getPayments() {
+  getTransactions() {
     return [..._transactions];
   }
 

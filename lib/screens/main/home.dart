@@ -3,6 +3,7 @@ import 'package:fintech_app_ui/constants/color.dart';
 import 'package:fintech_app_ui/providers/payment.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../components/kContainer.dart';
 import '../../components/virtual_card_back.dart';
 import '../../components/virtual_card_front.dart';
 import '../../providers/virtual_card.dart';
@@ -22,35 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       cardFront = !cardFront;
     });
-  }
-
-  Widget kContainer(
-    Color iconBg,
-    Color color,
-    String text,
-    IconData icon,
-  ) {
-    return Column(
-      children: [
-        Container(
-          height: 60,
-          width: 70,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(5),
-          ),
-          child: Center(
-            child: Icon(
-              icon,
-              color: iconBg,
-              size: 35,
-            ),
-          ),
-        ),
-        const SizedBox(height: 5),
-        Text(text)
-      ],
-    );
   }
 
   @override
@@ -113,24 +85,24 @@ class _HomeScreenState extends State<HomeScreen> {
             Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  kContainer(
-                    masterYellow,
-                    makeNewPlanBg,
-                    'Add new plan',
-                    Icons.create_new_folder_outlined,
+                children: const [
+                  KContainer(
+                    iconBg: masterYellow,
+                    color: makeNewPlanBg,
+                    text: 'Add new plan',
+                    icon: Icons.create_new_folder_outlined,
                   ),
-                  kContainer(
-                    Colors.blue,
-                    makeSubBg,
-                    'Make Subscription',
-                    Icons.notifications_active_outlined,
+                  KContainer(
+                    iconBg: Colors.blue,
+                    color: makeSubBg,
+                    text: 'Make Subscription',
+                    icon: Icons.notifications_active_outlined,
                   ),
-                  kContainer(
-                    Colors.green,
-                    fundWalletBg,
-                    'Fund Wallet',
-                    Icons.money,
+                  KContainer(
+                    iconBg: Colors.green,
+                    color: fundWalletBg,
+                    text: 'Fund Wallet',
+                    icon: Icons.money,
                   )
                 ],
               ),
