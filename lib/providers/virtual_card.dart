@@ -39,6 +39,14 @@ class VirtualCardData extends ChangeNotifier {
     );
   }
 
+  List<VirtualCard> getInActiveCards() {
+    return _cards
+        .where(
+          (card) => card.isActive == false,
+        )
+        .toList();
+  }
+
   getCards() {
     return [..._cards];
   }

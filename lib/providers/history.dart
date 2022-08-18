@@ -32,7 +32,7 @@ class HistoryData extends ChangeNotifier {
     History(
       id: 3,
       title: 'Canva',
-      imgAsset: 'assets/images/canva.png',
+      imgAsset: 'assets/images/canva.jpg',
       amount: 4200,
       date: DateTime(2022, 9, 19),
     ),
