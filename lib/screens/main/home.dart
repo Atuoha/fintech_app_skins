@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const ExchangeContainer(),
             InkWell(
-              onTap: () => toggleCardFace(),    // for switching card face
+              onTap: () => toggleCardFace(), // for switching card face
               child: Center(
                 child: cardFront
                     ? VirtualCardUI(
@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-
+            const SizedBox(height: 10),
             SizedBox(
               height: 200,
               child: Card(
@@ -151,35 +151,38 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      itemCount: payments.length,
-                      itemBuilder: (context, index) {
-                        var today = DateTime.now();
-                        var date = payments[index].date;
-                        var daysLeft =
-                            date.difference(today).inDays;
-                        return Column(
-                          children: [
-                            ListTile(
-                              leading: Image.asset(payments[index].imgAsset),
-                              title: Text(
-                                payments[index].title,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              subtitle: Text('$daysLeft days left'),
-                              trailing: Text(
-                                'N${payments[index].amount}',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                ),
+                    padding: EdgeInsets.zero,
+                    itemCount: payments.length,
+                    itemBuilder: (context, index) {
+                      var today = DateTime.now();
+                      var date = payments[index].date;
+                      var daysLeft = date.difference(today).inDays;
+                      return Column(
+                        children: [
+                          ListTile(
+                            leading: Image.asset(payments[index].imgAsset),
+                            title: Text(
+                              payments[index].title,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                            const Divider(thickness: 1.0, color: greyShade2),
-                          ],
-                        );
-                      }),
+                            subtitle: Text('$daysLeft days left'),
+                            trailing: Text(
+                              'N${payments[index].amount}',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          const Divider(
+                            thickness: 1.0,
+                            color: greyShade2,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
             )

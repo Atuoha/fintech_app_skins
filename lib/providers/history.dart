@@ -6,19 +6,14 @@ class HistoryData extends ChangeNotifier {
     return _histories.firstWhere((payment) => payment.id == id);
   }
 
-  getPayments() {
+  getHistories() {
     return [..._histories];
   }
 
-  final _todayHistories = [];
 
   getTodayHistories() {
-    var todayDate = DateTime.now();
-    for (var history in _histories) {
-      if (history.date == todayDate) {
-        _todayHistories.add(history);
-      }
-    }
+    var today = DateTime.now();
+    return _histories.where((history) => history.date.difference(today).inDays == 0).toList();
   }
 
   final _histories = [
@@ -62,14 +57,14 @@ class HistoryData extends ChangeNotifier {
       title: 'Flo',
       imgAsset: 'assets/images/flo.png',
       amount: 5200,
-      date: DateTime(2022, 9, 21),
+      date: DateTime.now(),
     ),
     History(
       id: 7,
       title: 'Karta',
       imgAsset: 'assets/images/karta.png',
       amount: 2100,
-      date: DateTime(2022, 9, 21),
+      date: DateTime.now(),
     ),
     History(
       id: 8,
