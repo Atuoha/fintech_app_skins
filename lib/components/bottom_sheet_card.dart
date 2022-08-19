@@ -34,6 +34,7 @@ class _CardBottomSheetState extends State<CardBottomSheet> {
     // toggling card activation
     _toggleCardActivation() {
       cardProvider.toggleActivation(widget.card.id);
+      Navigator.of(context).pop();
     }
 
     return Column(
