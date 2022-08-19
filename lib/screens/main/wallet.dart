@@ -1,7 +1,8 @@
-// import 'dart:ui';
+import 'package:fintech_app_ui/screens/tabs/wallet_screen_cards.dart';
 import 'package:flutter/material.dart';
 import '../../components/kContainer.dart';
 import '../../constants/color.dart';
+import '../tabs/wallet_screen_transactions.dart';
 
 class WalletScreen extends StatefulWidget {
   const WalletScreen({Key? key}) : super(key: key);
@@ -22,11 +23,16 @@ class _WalletScreenState extends State<WalletScreen> {
   // ignore: prefer_typing_uninitialized_variables
   var _currentCurrency;
 
-  final listTabs = [
+  var currentTabIndex = 0;
+  final tabTitles = [
     'Transactions',
     'Cards',
   ];
-  var currentTabIndex = 0;
+
+  // final tabs = const [
+  //   TransactionsTab(),
+  //   CardsTab(),
+  // ];
 
   Widget tabContainer(int index, String title) {
     return GestureDetector(
@@ -72,133 +78,140 @@ class _WalletScreenState extends State<WalletScreen> {
         right: 18,
         top: 80,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Wallet',
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: primaryColor,
+      child:SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Wallet',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: primaryColor,
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: 15,
-              horizontal: 15,
-            ),
-            height: size.height / 6,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: primaryColor,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Balance',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      width: size.width / 2.1,
-                      height: size.height * 0.05,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: changeCurrencyBg,
-                      ),
-                      child: DropdownButton(
-                        icon: const Icon(
-                          Icons.keyboard_arrow_down,
-                          color: primaryColor,
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: 15,
+                horizontal: 15,
+              ),
+              height: size.height / 6,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: primaryColor,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Balance',
+                        style: TextStyle(
+                          color: Colors.white,
                         ),
-                        underline: const Text(''),
-                        value: _currentCurrency,
-                        items: _currencies
-                            .map(
-                              (data) => DropdownMenuItem(
-                                value: data,
-                                child: Text(
-                                  data,
-                                  style: const TextStyle(
-                                    color: primaryColor,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        width: size.width / 2.1,
+                        height: size.height * 0.05,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: changeCurrencyBg,
+                        ),
+                        child: DropdownButton(
+                          icon: const Icon(
+                            Icons.keyboard_arrow_down,
+                            color: primaryColor,
+                          ),
+                          underline: const Text(''),
+                          value: _currentCurrency,
+                          items: _currencies
+                              .map(
+                                (data) => DropdownMenuItem(
+                                  value: data,
+                                  child: Text(
+                                    data,
+                                    style: const TextStyle(
+                                      color: primaryColor,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            )
-                            .toList(),
-                        onChanged: (value) => _changeCurrency(
-                          value.toString(),
+                              )
+                              .toList(),
+                          onChanged: (value) => _changeCurrency(
+                            value.toString(),
+                          ),
                         ),
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  'N502,3555,000',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                      )
+                    ],
                   ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    'N502,3555,000',
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                KContainer(
+                  iconBg: masterYellow,
+                  color: makeNewPlanBg,
+                  text: 'Add new card',
+                  icon: Icons.credit_card,
+                ),
+                KContainer(
+                  iconBg: Colors.green,
+                  color: fundWalletBg,
+                  text: 'Fund Wallet',
+                  icon: Icons.local_atm,
+                ),
+                KContainer(
+                  iconBg: Colors.red,
+                  color: manageSubColor,
+                  text: 'Withdraw',
+                  icon: Icons.wallet,
                 )
               ],
             ),
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              KContainer(
-                iconBg: masterYellow,
-                color: makeNewPlanBg,
-                text: 'Add new card',
-                icon: Icons.credit_card,
+            const SizedBox(height: 20),
+            Container(
+              height: 50,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 0.8,
+                  color: greyShade2,
+                ),
+                borderRadius: BorderRadius.circular(5),
+                // color: Colors.red,
               ),
-              KContainer(
-                iconBg: Colors.green,
-                color: fundWalletBg,
-                text: 'Fund Wallet',
-                icon: Icons.local_atm,
-              ),
-              KContainer(
-                iconBg: Colors.red,
-                color: manageSubColor,
-                text: 'Withdraw',
-                icon: Icons.wallet,
-              )
-            ],
-          ),
-          const SizedBox(height: 20),
-          Container(
-            height: 50,
-            decoration: BoxDecoration(
-              border: Border.all(
-                width: 0.8,
-                color: greyShade2,
-              ),
-              borderRadius: BorderRadius.circular(5),
-              // color: Colors.red,
-            ),
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: listTabs.length,
-              itemBuilder: (context, index) => tabContainer(
-                index,
-                listTabs[index],
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: tabTitles.length,
+                itemBuilder: (context, index) => tabContainer(
+                  index,
+                  tabTitles[index],
+                ),
               ),
             ),
-          ),
-          Container()
-        ],
+            const SizedBox(height: 10),
+            Container(
+              child: currentTabIndex == 0
+                  ? const TransactionsTab()
+                  : const CardsTab(),
+            ),
+          ],
+        ),
       ),
     );
   }

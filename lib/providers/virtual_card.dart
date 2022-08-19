@@ -69,6 +69,14 @@ class VirtualCardData extends ChangeNotifier {
       expiry: '08/24',
       cvc: 765,
       isMaster: false,
+    ),
+    VirtualCard(
+      id: 3,
+      cardColor: 'black',
+      cardName: 'Ujunwa Peace',
+      cardNumber: '3608 2562 1574 472',
+      expiry: '08/25',
+      cvc: 765,
     )
   ];
 }
