@@ -1,3 +1,4 @@
+import 'package:fintech_app_ui/components/bottom_sheet_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,43 +15,27 @@ class CardsTab extends StatefulWidget {
 }
 
 class _CardsTabState extends State<CardsTab> {
-  // this shows whether the card is showing the front or the back
-  var cardFront = true;
-
-  toggleCardFace() {
-    setState(() {
-      cardFront = !cardFront;
-    });
-  }
-
-  displayCard(int id, BuildContext context) {
-    var card = Provider.of<VirtualCardData>(
-      context,
-      listen: false,
-    ).findById(id);
-    return showModalBottomSheet(
-      context: context,
-      builder: (context) => InkWell(
-        onTap: () => toggleCardFace(), // for switching card face
-        child: Center(
-          child: cardFront
-              ? VirtualCardUI(
-                  cardColor: card.cardColor,
-                  cardName: card.cardName,
-                  cardNumber: card.cardNumber,
-                  expiry: card.expiry,
-                  isMaster: card.isMaster,
-                )
-              : VirtualCardBack(cvc: card.cvc),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     var cards = Provider.of<VirtualCardData>(context).getCards();
     Size size = MediaQuery.of(context).size;
+
+    displayCard(int id, BuildContext context) {
+      var card = Provider.of<VirtualCardData>(
+        context,
+        listen: false,
+      ).findById(id);
+      return showModalBottomSheet(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(200),
+          ),
+        ),
+        context: context,
+        builder: (context) => CardBottomSheet(card: card),
+      );
+    }
+
     return Column(
       children: [
         Padding(

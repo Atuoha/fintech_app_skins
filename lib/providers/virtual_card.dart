@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../model/virtual_card.dart';
 
 class VirtualCardData extends ChangeNotifier {
-  toggleIsActive(int id) {
+  toggleActivation(int id) {
     for (var card in _cards) {
       card.switchOffIsActive();
     }
