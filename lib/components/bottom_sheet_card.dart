@@ -32,7 +32,7 @@ class _CardBottomSheetState extends State<CardBottomSheet> {
     var cardProvider = Provider.of<VirtualCardData>(context);
 
     // toggling card activation
-    toggleCardActivation() {
+    _toggleCardActivation() {
       cardProvider.toggleActivation(widget.card.id);
     }
 
@@ -58,12 +58,12 @@ class _CardBottomSheetState extends State<CardBottomSheet> {
             ? KElevatedButton(
                 title: 'Inactivate',
                 icon: Icons.check_circle,
-                action: toggleCardActivation,
+                action: _toggleCardActivation,
               )
             : KElevatedButton(
                 title: 'Activate',
                 icon: Icons.check_circle,
-                action: toggleCardActivation,
+                action: _toggleCardActivation,
               )
       ],
     );
