@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../components/kContainer.dart';
 import '../../components/searchbox.dart';
 import '../../constants/color.dart';
@@ -54,7 +53,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                   icon: Icons.notifications_active_outlined,
                 ),
                 KContainer(
-                  iconBg: masterRed,
+                  iconBg: Colors.red,
                   color: manageSubColor,
                   text: 'Manage \n Subscriptions',
                   icon: Icons.receipt_long,
@@ -113,7 +112,10 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                               ),
                             ),
                           ),
-                          const Divider(thickness: 1.0, color: greyShade2),
+                          const Divider(
+                            thickness: 1.0,
+                            color: greyShade2,
+                          ),
                         ],
                       );
                     },

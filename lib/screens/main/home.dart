@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     iconBg: Colors.green,
                     color: fundWalletBg,
                     text: 'Fund Wallet',
-                    icon: Icons.money,
+                    icon: Icons.local_atm,
                   )
                 ],
               ),

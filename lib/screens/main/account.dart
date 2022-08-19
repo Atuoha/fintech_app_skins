@@ -68,7 +68,7 @@ class _AccountScreenState extends State<AccountScreen> {
             style: TextStyle(color: textColor),
           ),
           trailing: IconButton(
-            onPressed: ()=>action(),
+            onPressed: () => action(),
             icon: const Icon(
               Icons.chevron_right,
               color: Colors.black,
