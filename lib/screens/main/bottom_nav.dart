@@ -39,6 +39,7 @@ class _BottomNavState extends State<BottomNav> {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
+        // systemNavigationBarColor: Colors.transparent
       ),
     );
     return Scaffold(

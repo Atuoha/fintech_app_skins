@@ -64,13 +64,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
                               title: Text(
                                 todayHistory.title,
                                 style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                               trailing: Text(
                                 'N${todayHistory.amount}',
                                 style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),
@@ -108,13 +108,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             title: Text(
                               todayHistory.title,
                               style: const TextStyle(
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                             trailing: Text(
                               'N${todayHistory.amount}',
                               style: const TextStyle(
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           ),

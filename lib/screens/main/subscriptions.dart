@@ -66,7 +66,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
                 Text(
-                  'All',
+                  'All plans',
                   style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.w600,
@@ -103,13 +103,13 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                             title: Text(
                               todayHistory.title,
                               style: const TextStyle(
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                             trailing: Text(
                               'N${todayHistory.amount}',
                               style: const TextStyle(
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           ),
