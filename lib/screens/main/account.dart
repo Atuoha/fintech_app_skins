@@ -28,10 +28,10 @@ class _AccountScreenState extends State<AccountScreen> {
               color: primaryColor,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
           Container(
-            padding: const EdgeInsets.all(10),
-            height: size.height * 0.4,
+            padding: const EdgeInsets.all(20),
+            height: size.height / 7,
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -40,8 +40,9 @@ class _AccountScreenState extends State<AccountScreen> {
             child: Row(
               children: [
                 Image.asset('assets/images/avatar.png'),
-                const SizedBox(width: 5),
+                const SizedBox(width: 20),
                 Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
                     Text(
@@ -52,6 +53,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         fontSize: 18,
                       ),
                     ),
+                    SizedBox(height:5),
                     Text(
                       '0241053429',
                       style: TextStyle(
