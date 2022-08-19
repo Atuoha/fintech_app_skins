@@ -37,10 +37,10 @@ class _BottomNavState extends State<BottomNav> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-       const SystemUiOverlayStyle(
+      const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        systemNavigationBarColor:Colors.white,
-           systemNavigationBarIconBrightness: Brightness.dark
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
     return Scaffold(
@@ -86,25 +86,8 @@ class _BottomNavState extends State<BottomNav> {
       body: _screens[currentIndex],
     );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //UNCOMMENT AND COMMENT UP -- TRADITIONAL BOTTOM NAV AND THIS CONCEPT
     // FOLLOWS EXACTLY THE DESIGN OF THE PROTOTYPE AM USING BUT I LOOK COOL THINGS AND I CAN'T HELP :)
-
 
     // return Scaffold(
     //   bottomNavigationBar: BottomNavigationBar(
