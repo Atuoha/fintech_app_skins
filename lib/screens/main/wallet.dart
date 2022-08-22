@@ -1,8 +1,10 @@
+import 'package:fintech_app_ui/screens/other/withdraw.dart';
 import 'package:fintech_app_ui/screens/tabs/wallet_screen_cards.dart';
 import 'package:flutter/material.dart';
 import '../../components/kContainer.dart';
 import '../../constants/color.dart';
 import '../other/add_new_card.dart';
+import '../other/fund_wallet.dart';
 import '../tabs/wallet_screen_transactions.dart';
 
 class WalletScreen extends StatefulWidget {
@@ -182,7 +184,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   ),
                   GestureDetector(
                     onTap: () =>
-                        Navigator.of(context).pushNamed(AddNewCard.routeName),
+                        Navigator.of(context).pushNamed(FundWallet.routeName),
                     child: const KContainer(
                       iconBg: Colors.green,
                       color: fundWalletBg,
@@ -192,7 +194,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   ),
                   GestureDetector(
                     onTap: () =>
-                        Navigator.of(context).pushNamed(AddNewCard.routeName),
+                        Navigator.of(context).pushNamed(Withdraw.routeName),
                     child: const KContainer(
                       iconBg: Colors.red,
                       color: manageSubColor,
