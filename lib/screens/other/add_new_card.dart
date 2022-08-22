@@ -141,7 +141,7 @@ class AddNewCardState extends State<AddNewCard> {
       keyboardType:
           field == Field.pin ? TextInputType.number : TextInputType.text,
       textInputAction:
-          field == Field.pin ? TextInputAction.next : TextInputAction.done,
+          field == Field.pin ? TextInputAction.done : TextInputAction.next,
       validator: (value) {
         switch (field) {
           case Field.password:
@@ -221,10 +221,9 @@ class AddNewCardState extends State<AddNewCard> {
     );
 
     // add new card
-    Provider.of<VirtualCardData>(context, listen:false).addCard(newCard).then((value) {
-      Timer(const Duration(seconds: 5), () {
-        Navigator.of(context).pop();
-      });
+    Provider.of<VirtualCardData>(context, listen: false).addCard(newCard);
+    Timer(const Duration(seconds: 5), () {
+      Navigator.of(context).pop();
     });
   }
 
@@ -327,55 +326,55 @@ class AddNewCardState extends State<AddNewCard> {
                 ),
               ),
               const SizedBox(height: 15),
-              Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const Align(
-                      alignment: Alignment.topRight,
-                      child: Text(
-                        'Processing fee - 1,500.00',
-                        style: TextStyle(
-                          color: primaryColor,
-                        ),
+              isLoading
+                  ? Center(
+                      child: LoadingAnimationWidget.fourRotatingDots(
+                        color: primaryColor,
+                        size: kSize,
                       ),
-                    ),
-                    kDropDownField('Select card type', currentCardType,
-                        _cardTypes, Field.cardType),
-                    const SizedBox(height: 20),
-                    kDropDownField('Select card color', currentCardColor,
-                        _cardColors, Field.cardColor),
-                    const SizedBox(height: 20),
-                    kTextField(
-                      _passwordController,
-                      'Password',
-                      passwordObscure,
-                      Field.password,
-                    ),
-                    const SizedBox(height: 20),
-                    kTextField(
-                      _pinController,
-                      '4 Digit Pin',
-                      pinObscure,
-                      Field.pin,
-                    ),
-                    const SizedBox(height: 20),
-                    isLoading
-                        ? Center(
-                            child: LoadingAnimationWidget.fourRotatingDots(
-                              color: primaryColor,
-                              size: kSize,
+                    )
+                  : Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const Align(
+                            alignment: Alignment.topRight,
+                            child: Text(
+                              'Processing fee - 1,500.00',
+                              style: TextStyle(
+                                color: primaryColor,
+                              ),
                             ),
-                          )
-                        : KElevatedButton(
+                          ),
+                          kDropDownField('Select card type', currentCardType,
+                              _cardTypes, Field.cardType),
+                          const SizedBox(height: 20),
+                          kDropDownField('Select card color', currentCardColor,
+                              _cardColors, Field.cardColor),
+                          const SizedBox(height: 20),
+                          kTextField(
+                            _passwordController,
+                            'Password',
+                            passwordObscure,
+                            Field.password,
+                          ),
+                          const SizedBox(height: 20),
+                          kTextField(
+                            _pinController,
+                            '4 Digit Pin',
+                            pinObscure,
+                            Field.pin,
+                          ),
+                          const SizedBox(height: 20),
+                          KElevatedButton(
                             title: 'Request card',
                             icon: Icons.check_circle,
                             action: submitForm,
                           )
-                  ],
-                ),
-              )
+                        ],
+                      ),
+                    )
             ],
           ),
         ),
