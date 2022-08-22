@@ -4,13 +4,8 @@ import 'package:fintech_app_ui/providers/payment.dart';
 import 'package:fintech_app_ui/providers/subscription.dart';
 import 'package:fintech_app_ui/providers/transaction.dart';
 import 'package:fintech_app_ui/providers/virtual_card.dart';
-import 'package:fintech_app_ui/screens/auth/forgot_password.dart';
-import 'package:fintech_app_ui/screens/auth/signin.dart';
-import 'package:fintech_app_ui/screens/auth/signup.dart';
-import 'package:fintech_app_ui/screens/auth/verify.dart';
-import 'package:fintech_app_ui/screens/main/bottom_nav.dart';
+import 'package:fintech_app_ui/route/route.dart';
 import 'package:fintech_app_ui/screens/splash/entry_screen.dart';
-import 'package:fintech_app_ui/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -43,17 +38,13 @@ class FinTechApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(fontFamily: 'Poppins', primaryColor: primaryColor),
+        theme: ThemeData(
+          fontFamily: 'Poppins',
+          primaryColor: primaryColor,
+        ),
         title: 'Fintech App',
         home: const EntryScreen(),
-        routes: {
-          SplashScreen.routeName: (context) => const SplashScreen(),
-          Signup.routeName: (context) => const Signup(),
-          VerificationScreen.routeName: (context) => const VerificationScreen(),
-          Signin.routeName: (context) => const Signin(),
-          ForgotPassword.routeName: (context) => const ForgotPassword(),
-          BottomNav.routeName: (context) => const BottomNav(),
-        },
+        routes: routes,
       ),
     );
   }

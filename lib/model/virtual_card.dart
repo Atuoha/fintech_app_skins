@@ -5,7 +5,7 @@ class VirtualCard {
   final bool isMaster;
   final String expiry;
   final String cardNumber;
-  final String cvc;
+  final int cvc;
   bool isActive;
 
   VirtualCard({

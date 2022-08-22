@@ -9,7 +9,7 @@ class TransactionData extends ChangeNotifier {
     );
   }
 
-  getPayments() {
+  getTransactions() {
     return [..._transactions];
   }
 
@@ -24,7 +24,7 @@ class TransactionData extends ChangeNotifier {
     Transaction(
       id: 3,
       title: 'Canva',
-      imgAsset: 'assets/images/canva.png',
+      imgAsset: 'assets/images/canva.jpg',
       amount: 4200,
       date: DateTime(2022, 9, 19),
     ),
