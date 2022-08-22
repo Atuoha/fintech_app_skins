@@ -1,4 +1,5 @@
 import 'package:fintech_app_ui/components/bottom_sheet_card.dart';
+import 'package:fintech_app_ui/screens/other/add_new_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -58,10 +59,15 @@ class _CardsTabState extends State<CardsTab> {
                   ),
                   color: addNewCardBg,
                 ),
-                child: const Text(
-                  '+ Add New Card',
-                  style: TextStyle(
-                    color: primaryColor,
+                child: GestureDetector(
+                  onTap: () => Navigator.of(
+                    context,
+                  ).pushNamed(AddNewCard.routeName),
+                  child: const Text(
+                    '+ Add New Card',
+                    style: TextStyle(
+                      color: primaryColor,
+                    ),
                   ),
                 ),
               ),

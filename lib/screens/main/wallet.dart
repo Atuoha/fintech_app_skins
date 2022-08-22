@@ -2,6 +2,7 @@ import 'package:fintech_app_ui/screens/tabs/wallet_screen_cards.dart';
 import 'package:flutter/material.dart';
 import '../../components/kContainer.dart';
 import '../../constants/color.dart';
+import '../other/add_new_card.dart';
 import '../tabs/wallet_screen_transactions.dart';
 
 class WalletScreen extends StatefulWidget {
@@ -78,7 +79,7 @@ class _WalletScreenState extends State<WalletScreen> {
         // right: 18,
         top: 80,
       ),
-      child:SingleChildScrollView(
+      child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -91,7 +92,7 @@ class _WalletScreenState extends State<WalletScreen> {
             ),
             const SizedBox(height: 20),
             Padding(
-              padding:const EdgeInsets.only(right:18),
+              padding: const EdgeInsets.only(right: 18),
               child: Container(
                 padding: const EdgeInsets.symmetric(
                   vertical: 15,
@@ -165,35 +166,47 @@ class _WalletScreenState extends State<WalletScreen> {
             ),
             const SizedBox(height: 20),
             Padding(
-              padding:const EdgeInsets.only(right:18),
-              child:  Row(
+              padding: const EdgeInsets.only(right: 18),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  KContainer(
-                    iconBg: masterYellow,
-                    color: makeNewPlanBg,
-                    text: 'Add new card',
-                    icon: Icons.credit_card,
+                children: [
+                  GestureDetector(
+                    onTap: () =>
+                        Navigator.of(context).pushNamed(AddNewCard.routeName),
+                    child: const KContainer(
+                      iconBg: masterYellow,
+                      color: makeNewPlanBg,
+                      text: 'Add new card',
+                      icon: Icons.credit_card,
+                    ),
                   ),
-                  KContainer(
-                    iconBg: Colors.green,
-                    color: fundWalletBg,
-                    text: 'Fund Wallet',
-                    icon: Icons.local_atm,
+                  GestureDetector(
+                    onTap: () =>
+                        Navigator.of(context).pushNamed(AddNewCard.routeName),
+                    child: const KContainer(
+                      iconBg: Colors.green,
+                      color: fundWalletBg,
+                      text: 'Fund Wallet',
+                      icon: Icons.local_atm,
+                    ),
                   ),
-                  KContainer(
-                    iconBg: Colors.red,
-                    color: manageSubColor,
-                    text: 'Withdraw',
-                    icon: Icons.wallet,
+                  GestureDetector(
+                    onTap: () =>
+                        Navigator.of(context).pushNamed(AddNewCard.routeName),
+                    child: const KContainer(
+                      iconBg: Colors.red,
+                      color: manageSubColor,
+                      text: 'Withdraw',
+                      icon: Icons.wallet,
+                    ),
                   )
                 ],
               ),
             ),
             const SizedBox(height: 20),
             Padding(
-              padding:const EdgeInsets.only(right:18),
-              child:  Container(
+              padding: const EdgeInsets.only(right: 18),
+              child: Container(
                 height: 50,
                 decoration: BoxDecoration(
                   border: Border.all(
