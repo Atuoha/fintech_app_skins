@@ -80,10 +80,11 @@ class AddNewCardState extends State<AddNewCard> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(18.0),
+        padding: const EdgeInsets.symmetric(horizontal: 18.0),
         child: Column(
           children: [
             Container(
+              margin: const EdgeInsets.only(bottom: 15),
               padding: const EdgeInsets.symmetric(
                 horizontal: 15,
                 vertical: 12,
@@ -128,15 +129,29 @@ class AddNewCardState extends State<AddNewCard> {
                     : VirtualCardBack(cvc: activeCard.cvc),
               ),
             ),
+            const SizedBox(height: 15),
             Form(
               key: _formKey,
               child: Column(
                 children: [
+                  Row(),
                   DropdownButtonFormField(
-
                     decoration: InputDecoration(
+                      label: const Text(
+                        'Select card type',
+                        style: TextStyle(
+                          color: primaryColor,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          width: 1,
+                          color: primaryColor,
+                        ),
+                      ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(10),
                         borderSide: const BorderSide(
                           width: 1,
                           color: greyShade2,
