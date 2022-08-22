@@ -1,10 +1,15 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:fintech_app_ui/constants/color.dart';
+import 'package:fintech_app_ui/model/virtual_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:provider/provider.dart';
 import '../../components/kElevatedButton.dart';
 import '../../components/virtual_card_back.dart';
 import '../../components/virtual_card_front.dart';
+import '../../providers/virtual_card.dart';
 
 class AddNewCard extends StatefulWidget {
   static const routeName = '/newCard';
@@ -15,7 +20,12 @@ class AddNewCard extends StatefulWidget {
   State<AddNewCard> createState() => AddNewCardState();
 }
 
-enum Field { password, pin, cardType, cardColor }
+enum Field {
+  password,
+  pin,
+  cardType,
+  cardColor,
+}
 
 class AddNewCardState extends State<AddNewCard> {
   final _formKey = GlobalKey<FormState>();
@@ -32,6 +42,8 @@ class AddNewCardState extends State<AddNewCard> {
   var passwordObscure = true;
   var pinObscure = true;
   int cvc = Random().nextInt(888);
+  var isLoading = false;
+  final double kSize = 100;
 
   // var cardNumber // this should be generated
   var bvnLinkingVisible = true;
@@ -91,7 +103,6 @@ class AddNewCardState extends State<AddNewCard> {
         ),
       ),
       value: dataValue,
-
       items: list
           .map(
             (data) => DropdownMenuItem(
@@ -113,7 +124,6 @@ class AddNewCardState extends State<AddNewCard> {
             });
             break;
         }
-
       },
     );
   }
@@ -191,13 +201,31 @@ class AddNewCardState extends State<AddNewCard> {
 
   // submitForm
   submitForm() {
-    // var valid = _formKey.currentState!.validate();
-    // if (!valid) {
-    //   return null;
-    // }
+    var valid = _formKey.currentState!.validate();
+    if (!valid) {
+      return null;
+    } else {
+      setState(() {
+        isLoading = true;
+      });
+    }
 
     // request for new card
-    print(currentCardColor);
+    var newCard = VirtualCard(
+      id: DateTime.now().toString(),
+      cardColor: currentCardColor,
+      cardName: 'Ujunwa Peace',
+      expiry: '03/26',
+      cardNumber: '0980 9687 2423 2343 5645',
+      cvc: cvc,
+    );
+
+    // add new card
+    Provider.of<VirtualCardData>(context, listen:false).addCard(newCard).then((value) {
+      Timer(const Duration(seconds: 5), () {
+        Navigator.of(context).pop();
+      });
+    });
   }
 
   @override
@@ -333,11 +361,18 @@ class AddNewCardState extends State<AddNewCard> {
                       Field.pin,
                     ),
                     const SizedBox(height: 20),
-                    KElevatedButton(
-                      title: 'Request card',
-                      icon: Icons.check_circle,
-                      action: submitForm,
-                    )
+                    isLoading
+                        ? Center(
+                            child: LoadingAnimationWidget.fourRotatingDots(
+                              color: primaryColor,
+                              size: kSize,
+                            ),
+                          )
+                        : KElevatedButton(
+                            title: 'Request card',
+                            icon: Icons.check_circle,
+                            action: submitForm,
+                          )
                   ],
                 ),
               )

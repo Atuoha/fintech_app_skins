@@ -3,7 +3,6 @@ import 'package:fintech_app_ui/screens/other/add_new_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../components/virtual_card_back.dart';
 import '../../components/virtual_card_front.dart';
 import '../../constants/color.dart';
 import '../../providers/virtual_card.dart';
@@ -21,7 +20,7 @@ class _CardsTabState extends State<CardsTab> {
     var cards = Provider.of<VirtualCardData>(context).getCards();
     Size size = MediaQuery.of(context).size;
 
-    displayCard(int id, BuildContext context) {
+    displayCard(String id, BuildContext context) {
       var card = Provider.of<VirtualCardData>(
         context,
         listen: false,

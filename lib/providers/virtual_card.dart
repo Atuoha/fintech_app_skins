@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../model/virtual_card.dart';
 
 class VirtualCardData extends ChangeNotifier {
-  toggleActivation(int id) {
+  toggleActivation(String id) {
     for (var card in _cards) {
       card.switchOffIsActive();
     }
@@ -13,7 +13,7 @@ class VirtualCardData extends ChangeNotifier {
     notifyListeners();
   }
 
-  VirtualCard findById(int id) {
+  VirtualCard findById(String id) {
     return _cards.firstWhere(
       (card) => card.id == id,
     );
@@ -21,7 +21,7 @@ class VirtualCardData extends ChangeNotifier {
 
   addCard(VirtualCard vCard) {
     var card = VirtualCard(
-      id: int.parse(DateTime.now().toString()),
+      id: DateTime.now().toString(),
       cardColor: vCard.cardColor,
       cardName: vCard.cardName,
       expiry: vCard.expiry,
@@ -55,7 +55,7 @@ class VirtualCardData extends ChangeNotifier {
 
   final _cards = [
     VirtualCard(
-      id: 1,
+      id: '1',
       cardColor: 'red',
       cardName: 'Ujunwa Peace',
       cardNumber: '1834 8905 5435 8654',
@@ -64,7 +64,7 @@ class VirtualCardData extends ChangeNotifier {
       isActive: true,
     ),
     VirtualCard(
-      id: 2,
+      id: '2',
       cardColor: 'green',
       cardName: 'Ujunwa Peace',
       cardNumber: '7898 4332 9834 3454',
@@ -73,7 +73,7 @@ class VirtualCardData extends ChangeNotifier {
       isMaster: false,
     ),
     VirtualCard(
-      id: 3,
+      id: '3',
       cardColor: 'blue',
       cardName: 'Ujunwa Peace',
       cardNumber: '3608 2562 1574 4721',

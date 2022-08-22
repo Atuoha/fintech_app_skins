@@ -1,5 +1,5 @@
 class VirtualCard {
-  final int id;
+  final String id;
   final String cardColor;
   final String cardName;
   final bool isMaster;
