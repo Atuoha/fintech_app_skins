@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../components/balance_container.dart';
 import '../../constants/color.dart';
 
 class Withdraw extends StatefulWidget {
@@ -43,6 +44,12 @@ class _WithdrawState extends State<Withdraw> {
           ),
         ),
       ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 18),
+        child: Column(children: [
+          const BalanceContainer(),
+        ],),
+      )
     );
   }
 }

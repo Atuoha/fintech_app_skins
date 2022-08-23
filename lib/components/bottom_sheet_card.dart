@@ -85,7 +85,7 @@ class _CardBottomSheetState extends State<CardBottomSheet> {
                 ),
               )
             : Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   widget.card.isActive
                       ? KElevatedButton(
@@ -98,7 +98,7 @@ class _CardBottomSheetState extends State<CardBottomSheet> {
                           icon: Icons.check_circle,
                           action: _toggleCardActivation,
                         ),
-                 const  SizedBox(width:10),
+                  const SizedBox(width: 10),
                   KElevatedButton(
                     title: 'Terminate',
                     icon: Icons.clear,
