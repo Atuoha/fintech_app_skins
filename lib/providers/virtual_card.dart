@@ -33,13 +33,18 @@ class VirtualCardData extends ChangeNotifier {
     notifyListeners();
   }
 
+  deleteCard(String id) {
+    _cards.removeWhere(
+      (card) => card.id == id,
+    );
+    notifyListeners();
+  }
+
   VirtualCard getActiveCard() {
     return _cards.firstWhere(
       (card) => card.isActive == true,
     );
   }
-
-
 
   List<VirtualCard> getInActiveCards() {
     return _cards

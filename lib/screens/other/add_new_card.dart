@@ -211,12 +211,13 @@ class AddNewCardState extends State<AddNewCard> {
     }
 
     // request for new card
+    // in real scenario the card details will be auto generated
     var newCard = VirtualCard(
       id: DateTime.now().toString(),
       cardColor: currentCardColor,
       cardName: 'Ujunwa Peace',
       expiry: '03/26',
-      cardNumber: '0980 9687 2423 2343 5645',
+      cardNumber: '0980 9687 2423 2343 ',
       cvc: cvc,
     );
 
