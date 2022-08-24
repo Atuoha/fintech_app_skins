@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:fintech_app_ui/components/kElevatedButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -46,6 +49,15 @@ class _WithdrawState extends State<Withdraw> {
     },
   ];
 
+  // withdraw action
+  _withdraw() {
+    // TODO: Implement Withdraw
+    Timer(const Duration(seconds: 5), () {
+      Navigator.of(context).pop();
+    });
+  }
+
+  // each bank
   Widget kContainer(
     int index,
     String name,
@@ -178,6 +190,19 @@ class _WithdrawState extends State<Withdraw> {
     );
   }
 
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _passwordController.addListener(() {
+      setState(() {});
+    });
+    _pinController.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -210,59 +235,89 @@ class _WithdrawState extends State<Withdraw> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18),
-        child: Column(
-          children: [
-            const BalanceContainer(),
-            const SizedBox(height: 20),
-            kTextField(
-              _amountController,
-              'Withdrawal Amount',
-              false,
-              Field.amount,
-            ),
-            // 50737557
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Select receiving account',
-                  style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () => {}, // TODO: Navigate to add new bank
-                  child: const Text(
-                    '+ Add new bank',
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const BalanceContainer(),
+              const SizedBox(height: 20),
+              kTextField(
+                _amountController,
+                'Withdrawal Amount',
+                false,
+                Field.amount,
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Select receiving account',
                     style: TextStyle(
                       color: primaryColor,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 105,
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                scrollDirection: Axis.horizontal,
-                itemCount: bankAccounts.length,
-                itemBuilder: (context, index) {
-                  var bank = bankAccounts[index];
-                  return kContainer(
-                    index,
-                    '${bank["name"]}',
-                    '${bank["image"]}',
-                    int.parse(
-                      '${bank['number']}',
+                  GestureDetector(
+                    onTap: () => {}, // TODO: Navigate to add new bank section
+                    child: const Text(
+                      '+ Add new bank',
+                      style: TextStyle(
+                        color: primaryColor,
+                      ),
                     ),
-                  );
-                },
+                  )
+                ],
               ),
-            )
-          ],
+              SizedBox(
+                height: 112,
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: bankAccounts.length,
+                  itemBuilder: (context, index) {
+                    var bank = bankAccounts[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: kContainer(
+                        index,
+                        '${bank["name"]}',
+                        '${bank["image"]}',
+                        int.parse(
+                          '${bank['number']}',
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
+              kTextField(
+                _passwordController,
+                'Password',
+                passwordObscure,
+                Field.password,
+              ),
+              const SizedBox(height: 20),
+              kTextField(
+                _pinController,
+                '4 Digit Pin',
+                pinObscure,
+                Field.pin,
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Funds will be removed from your SwiftPay balance',
+                style: TextStyle(color: greyShade2),
+              ),
+              const SizedBox(height: 5),
+              KElevatedButton(
+                title: 'Withdraw',
+                icon: Icons.check_circle,
+                action: _withdraw,
+              )
+            ],
+          ),
         ),
       ),
     );
