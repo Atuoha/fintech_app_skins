@@ -384,7 +384,7 @@ class _WithdrawState extends State<Withdraw> {
                   : KElevatedButton(
                       title: 'Add Bank',
                       icon: Icons.check_circle,
-                      action: () => _addBank,
+                      action:_addBank,
                     )
             ],
           ),
@@ -526,7 +526,7 @@ class _WithdrawState extends State<Withdraw> {
                     : KElevatedButton(
                         title: 'Withdraw',
                         icon: Icons.check_circle,
-                        action: () => _withdraw,
+                        action: _withdraw,
                       )
               ],
             ),

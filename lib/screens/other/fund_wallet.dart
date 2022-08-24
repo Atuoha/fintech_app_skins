@@ -49,15 +49,14 @@ class _FundWalletState extends State<FundWallet> {
       //TODO: Implement Funding
 
       // isLoad action
-      _isLoadingAction() {
-        setState(() {
-          isLoading = true;
-        });
 
-        Timer(const Duration(seconds: 5), () {
-          Navigator.of(context).pop();
-        });
-      }
+      setState(() {
+        isLoading = true;
+      });
+
+      Timer(const Duration(seconds: 5), () {
+        Navigator.of(context).pop();
+      });
     }
   }
 
@@ -208,44 +207,47 @@ class _FundWalletState extends State<FundWallet> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18.0),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const BalanceContainer(),
-              const SizedBox(height: 20),
-              kTextField(
-                _amountController,
-                'Amount',
-                false,
-                Field.amount,
-              ),
-              const SizedBox(height: 20),
-              kDropDownField(
-                'Select Source',
-                currentSource,
-                sourceOfFunds,
-              ),
-              const SizedBox(height: 20),
-              kTextField(
-                _passwordController,
-                'Password',
-                passwordObscure,
-                Field.password,
-              ),
-              const SizedBox(height: 20),
-              isLoading
-                  ? Center(
-                      child: LoadingAnimationWidget.fourRotatingDots(
-                        color: primaryColor,
-                        size: kSize,
-                      ),
-                    )
-                  : KElevatedButton(
-                      title: 'Submit',
-                      icon: Icons.check_circle,
-                      action: () => _submitForm,
-                    )
-            ],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const BalanceContainer(),
+                const SizedBox(height: 20),
+                kTextField(
+                  _amountController,
+                  'Amount',
+                  false,
+                  Field.amount,
+                ),
+                const SizedBox(height: 20),
+                kDropDownField(
+                  'Select Source',
+                  currentSource,
+                  sourceOfFunds,
+                ),
+                const SizedBox(height: 20),
+                kTextField(
+                  _passwordController,
+                  'Password',
+                  passwordObscure,
+                  Field.password,
+                ),
+                const SizedBox(height: 20),
+                isLoading
+                    ? Center(
+                        child: LoadingAnimationWidget.fourRotatingDots(
+                          color: primaryColor,
+                          size: kSize,
+                        ),
+                      )
+                    : KElevatedButton(
+                        title: 'Submit',
+                        icon: Icons.check_circle,
+                        action: _submitForm,
+                      )
+              ],
+            ),
           ),
         ),
       ),
