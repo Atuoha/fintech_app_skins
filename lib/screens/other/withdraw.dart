@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:fintech_app_ui/components/kElevatedButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../components/balance_container.dart';
 import '../../constants/color.dart';
 
@@ -35,6 +36,7 @@ class _WithdrawState extends State<Withdraw> {
   var currentBank = 0;
   var currentBankName = 'Select Bank';
   var isLoading = false;
+  final double kSize = 100;
 
   final _banks = [
     'Select Bank',
@@ -205,11 +207,11 @@ class _WithdrawState extends State<Withdraw> {
     return TextFormField(
       controller: controller,
       obscureText: obscure,
-      keyboardType: field == Field.pin
+      keyboardType: field == Field.pin ||
+              field == Field.amount ||
+              field == Field.accountNumber
           ? TextInputType.number
-          : field == Field.amount
-              ? TextInputType.number
-              : TextInputType.text,
+          : TextInputType.text,
       textInputAction:
           field == Field.pin ? TextInputAction.done : TextInputAction.next,
       validator: (value) {
@@ -238,6 +240,10 @@ class _WithdrawState extends State<Withdraw> {
           case Field.accountNumber:
             if (value!.isEmpty) {
               return 'Account number can not be empty';
+            }
+
+            if (value.length < 10) {
+              return 'Invalid account number';
             }
             break;
 
@@ -368,11 +374,18 @@ class _WithdrawState extends State<Withdraw> {
                 Field.accountName,
               ),
               const SizedBox(height: 10),
-              KElevatedButton(
-                title: 'Add Bank',
-                icon: Icons.check_circle,
-                action: _addBank,
-              )
+              isLoading
+                  ? Center(
+                      child: LoadingAnimationWidget.fourRotatingDots(
+                        color: primaryColor,
+                        size: kSize,
+                      ),
+                    )
+                  : KElevatedButton(
+                      title: 'Add Bank',
+                      icon: Icons.check_circle,
+                      action: () => _addBank,
+                    )
             ],
           ),
         ),
@@ -503,11 +516,18 @@ class _WithdrawState extends State<Withdraw> {
                   style: TextStyle(color: greyShade2),
                 ),
                 const SizedBox(height: 5),
-                KElevatedButton(
-                  title: 'Withdraw',
-                  icon: Icons.check_circle,
-                  action: _withdraw,
-                )
+                isLoading
+                    ? Center(
+                        child: LoadingAnimationWidget.fourRotatingDots(
+                          color: primaryColor,
+                          size: kSize,
+                        ),
+                      )
+                    : KElevatedButton(
+                        title: 'Withdraw',
+                        icon: Icons.check_circle,
+                        action: () => _withdraw,
+                      )
               ],
             ),
           ),
