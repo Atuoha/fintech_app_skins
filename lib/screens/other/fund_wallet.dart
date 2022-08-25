@@ -65,6 +65,8 @@ class _FundWalletState extends State<FundWallet> {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
 
@@ -147,16 +149,18 @@ class _FundWalletState extends State<FundWallet> {
           return null;
         },
         decoration: InputDecoration(
-          suffixIcon: controller.text.isNotEmpty
-              ? IconButton(
-                  onPressed: () => setState(() {
-                    passwordObscure = !passwordObscure;
-                  }),
-                  icon: Icon(
-                    obscure ? Icons.visibility : Icons.visibility_off,
-                    color: primaryColor,
-                  ),
-                )
+          suffixIcon: field == Field.password
+              ? controller.text.isNotEmpty
+                  ? IconButton(
+                      onPressed: () => setState(() {
+                        passwordObscure = !passwordObscure;
+                      }),
+                      icon: Icon(
+                        obscure ? Icons.visibility : Icons.visibility_off,
+                        color: primaryColor,
+                      ),
+                    )
+                  : const Text('')
               : const Text(''),
           label: Text(
             text,

@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:fintech_app_ui/components/kElevatedButton.dart';
+import 'package:fintech_app_ui/screens/other/response_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -37,6 +39,8 @@ class _WithdrawState extends State<Withdraw> {
   var currentBankName = 'Select Bank';
   var isLoading = false;
   final double kSize = 100;
+
+  var transId = Random().nextInt(888);
 
   final _banks = [
     'Select Bank',
@@ -128,7 +132,21 @@ class _WithdrawState extends State<Withdraw> {
     if (!valid) {
       return null;
     } else {
-      _isLoadingAction();
+      setState(() {
+        isLoading = true;
+      });
+      Timer(const Duration(seconds: 5), () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ResponseScreen(
+              successStatus: true,
+              message: '',
+              amount: double.parse(_amountController.text),
+              transId: 'swift-$transId',
+            ),
+          ),
+        );
+      });
     }
   }
 
@@ -384,7 +402,7 @@ class _WithdrawState extends State<Withdraw> {
                   : KElevatedButton(
                       title: 'Add Bank',
                       icon: Icons.check_circle,
-                      action:_addBank,
+                      action: _addBank,
                     )
             ],
           ),
@@ -410,6 +428,8 @@ class _WithdrawState extends State<Withdraw> {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
 
