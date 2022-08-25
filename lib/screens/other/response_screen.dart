@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../constants/color.dart';
@@ -16,6 +17,14 @@ class ResponseScreen extends StatelessWidget {
   final double amount;
   final String transId;
 
+
+  _printReceipt(){
+    //TODO: Implement Print Receipt
+    if (kDebugMode) {
+      print('Print Receipt');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -25,7 +34,30 @@ class ResponseScreen extends StatelessWidget {
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
+
+    Widget kRowContent(String title, String value) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 18,
+            ),
+          ),
+          Text(
+            value,
+            style: const TextStyle(
+              color: greyShade2,
+              fontSize: 18,
+            ),
+          )
+        ],
+      );
+    }
+
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -40,11 +72,23 @@ class ResponseScreen extends StatelessWidget {
             ),
           ),
         ),
+        actions:  [
+          Padding(
+            padding: const EdgeInsets.only(right:10.0),
+            child: IconButton(
+              onPressed: ()=>_printReceipt,
+              icon: const Icon(
+                Icons.print,
+                color: primaryColor,
+              ),
+            ),
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(18.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             successStatus
                 ? Image.asset('assets/images/success.gif')
@@ -58,45 +102,17 @@ class ResponseScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Text(message),
-            successStatus ?Column(
-              children: [
-                Row(
-                  children: [
-                    const Text(
-                      'Amount:',
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                    Text(
-                      'N$amount',
-                      style: const TextStyle(
-                        color: greyShade2,
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    const Text(
-                      'Transaction ID:',
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                    Text(
-                      transId,
-                      style: const TextStyle(
-                        color: greyShade2,
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ): const Text(''),
-
+            Text(message,textAlign: TextAlign.center,),
+            const SizedBox(height: 20),
+            successStatus
+                ? Column(
+                    children: [
+                      kRowContent('Amount:', 'N$amount'),
+                      const SizedBox(height: 10),
+                      kRowContent('Transaction ID:', transId),
+                    ],
+                  )
+                : const Text(''),
           ],
         ),
       ),

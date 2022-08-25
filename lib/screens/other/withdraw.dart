@@ -135,12 +135,17 @@ class _WithdrawState extends State<Withdraw> {
       setState(() {
         isLoading = true;
       });
+      var bankName = bankAccounts[currentBank]['name'];
+      var account = bankAccounts[currentBank]['number'];
+      var successMsg = 'Your funds has been processed to $bankName $account. You should receive it any moment';
+      var errorMsg = 'Your funds can not be processed to $bankName $account. Due to insufficient balance';
       Timer(const Duration(seconds: 5), () {
+
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => ResponseScreen(
-              successStatus: true,
-              message: '',
+              successStatus: false,
+              message: errorMsg,
               amount: double.parse(_amountController.text),
               transId: 'swift-$transId',
             ),
