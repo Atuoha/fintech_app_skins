@@ -1,8 +1,12 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:fintech_app_ui/components/kElevatedButton.dart';
+import 'package:fintech_app_ui/providers/virtual_card.dart';
+import 'package:fintech_app_ui/screens/other/response_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:provider/provider.dart';
 import '../../components/balance_container.dart';
 import '../../constants/color.dart';
 
@@ -24,11 +28,12 @@ class _FundWalletState extends State<FundWallet> {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
   final _amountController = TextEditingController();
-  final sourceOfFunds = ['Select: ', 'Balance', 'Transfer'];
-  var currentSource = 'Select: ';
+  final sourceOfFunds = ['Balance', 'Transfer'];
+  var currentSource = 'Balance';
   var passwordObscure = true;
   var isLoading = false;
   final double kSize = 100;
+  var transId = Random().nextInt(888);
 
   @override
   void initState() {
@@ -54,8 +59,26 @@ class _FundWalletState extends State<FundWallet> {
         isLoading = true;
       });
 
+      var msg =
+          'Your funds has been processed. Debit will be from through $currentSource.';
       Timer(const Duration(seconds: 5), () {
-        Navigator.of(context).pop();
+        Provider.of<VirtualCardData>(
+          context,
+          listen: false,
+        ).fundAccount(
+          double.parse(_amountController.text),
+        );
+
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ResponseScreen(
+              successStatus: true,
+              message: msg,
+              amount: double.parse(_amountController.text),
+              transId: 'swift-$transId',
+            ),
+          ),
+        );
       });
     }
   }

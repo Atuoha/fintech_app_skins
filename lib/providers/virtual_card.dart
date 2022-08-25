@@ -2,6 +2,24 @@ import 'package:flutter/material.dart';
 import '../model/virtual_card.dart';
 
 class VirtualCardData extends ChangeNotifier {
+
+  //balance
+  double balance  = 900000;
+
+  getBalance(){
+    return balance;
+  }
+
+  withdrawFromBalance(double amount){
+    balance -= amount;
+    notifyListeners();
+  }
+
+  fundAccount(double amount){
+    balance += amount;
+    notifyListeners();
+  }
+
   toggleActivation(String id) {
     for (var card in _cards) {
       card.switchOffIsActive();

@@ -5,8 +5,10 @@ import 'package:fintech_app_ui/screens/other/response_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:provider/provider.dart';
 import '../../components/balance_container.dart';
 import '../../constants/color.dart';
+import '../../providers/virtual_card.dart';
 
 class Withdraw extends StatefulWidget {
   static const routeName = '/withdraw';
@@ -135,17 +137,42 @@ class _WithdrawState extends State<Withdraw> {
       setState(() {
         isLoading = true;
       });
+
+      // balance holding balance from provider
+      var balance = Provider.of<VirtualCardData>(
+        context,
+        listen: false,
+      ).getBalance();
+
+      var message = '';
+      var status = false;
       var bankName = bankAccounts[currentBank]['name'];
       var account = bankAccounts[currentBank]['number'];
-      var successMsg = 'Your funds has been processed to $bankName $account. You should receive it any moment';
-      var errorMsg = 'Your funds can not be processed to $bankName $account. Due to insufficient balance';
-      Timer(const Duration(seconds: 5), () {
+      if (double.parse(_amountController.text) > balance) {
+        message =
+            'Your funds has been processed to $bankName $account. You should receive it any moment';
+        status = false;
+      } else {
+        message =
+            'Your funds can not be processed to $bankName $account. Due to insufficient balance';
+        status = true;
 
+        // withdraw from balance
+        Provider.of<VirtualCardData>(
+          context,
+          listen: false,
+        ).withdrawFromBalance(
+          double.parse(_amountController.text),
+        );
+      }
+
+      // timer
+      Timer(const Duration(seconds: 5), () {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => ResponseScreen(
-              successStatus: false,
-              message: errorMsg,
+              successStatus: status,
+              message: message,
               amount: double.parse(_amountController.text),
               transId: 'swift-$transId',
             ),
