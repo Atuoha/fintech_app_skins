@@ -17,7 +17,7 @@ class SubscriptionData extends ChangeNotifier {
       id: 1,
       title: 'Netflix',
       imgAsset: 'assets/images/netflix.png',
-      amount: 3200,
+      amount: 1200,
       date: DateTime(2022, 9, 22),
     ),
     Sub(

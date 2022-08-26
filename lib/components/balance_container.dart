@@ -1,4 +1,7 @@
+import 'package:fintech_app_ui/providers/virtual_card.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import '../constants/color.dart';
 
 class BalanceContainer extends StatefulWidget {
@@ -35,8 +38,9 @@ class _BalanceContainerState extends State<BalanceContainer> {
 
   @override
   Widget build(BuildContext context) {
+    double balance = Provider.of<VirtualCardData>(context).getBalance();
     Size size = MediaQuery.of(context).size;
-    return  Container(
+    return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 15,
         horizontal: 15,
@@ -77,15 +81,15 @@ class _BalanceContainerState extends State<BalanceContainer> {
                   items: _currencies
                       .map(
                         (data) => DropdownMenuItem(
-                      value: data,
-                      child: Text(
-                        data,
-                        style: const TextStyle(
-                          color: primaryColor,
+                          value: data,
+                          child: Text(
+                            data,
+                            style: const TextStyle(
+                              color: primaryColor,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  )
+                      )
                       .toList(),
                   onChanged: (value) => _changeCurrency(
                     value.toString(),
@@ -95,9 +99,9 @@ class _BalanceContainerState extends State<BalanceContainer> {
             ],
           ),
           const SizedBox(height: 10),
-          const Text(
-            'N502,3555,000',
-            style: TextStyle(
+          Text(
+            NumberFormat.currency(name: 'N').format(balance),
+            style: const TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.w600,
               color: Colors.white,

@@ -17,3 +17,5 @@ const makeSubBg = Color(0XFFE0F2FF);
 const makeNewPlanBg = Color(0XFFF9EBCD);
 const manageSubColor = Color(0XFFF4CDEB);
 const changeCurrencyBg = Color(0XFFEEF8FF);
+const successColor = Color(0XFF10CC68);
+const errorColor = Color(0XFFFF7D81);

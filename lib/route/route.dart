@@ -5,6 +5,7 @@ import 'package:fintech_app_ui/screens/auth/verify.dart';
 import 'package:fintech_app_ui/screens/main/bottom_nav.dart';
 import 'package:fintech_app_ui/screens/other/add_new_card.dart';
 import 'package:fintech_app_ui/screens/other/fund_wallet.dart';
+import 'package:fintech_app_ui/screens/other/response_screen.dart';
 import 'package:fintech_app_ui/screens/other/subscription_details.dart';
 import 'package:fintech_app_ui/screens/other/withdraw.dart';
 import 'package:fintech_app_ui/screens/splash/splash_screen.dart';
@@ -20,4 +21,5 @@ var routes = {
   FundWallet.routeName: (context) => const FundWallet(),
   SubscriptionDetails.routeName: (context) => const SubscriptionDetails(),
   Withdraw.routeName: (context) => const Withdraw(),
+
 };
