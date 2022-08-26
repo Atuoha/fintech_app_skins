@@ -1,4 +1,6 @@
-class VirtualCard {
+import 'package:flutter/material.dart';
+
+class VirtualCard with ChangeNotifier{
   final String id;
   final String cardColor;
   final String cardName;

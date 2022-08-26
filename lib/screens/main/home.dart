@@ -72,13 +72,13 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Center(
                 child: cardFront
                     ? VirtualCardUI(
-                    id: activeCard.id,
+                        id: activeCard.id,
                         cardColor: activeCard.cardColor,
                         cardName: activeCard.cardName,
                         cardNumber: activeCard.cardNumber,
                         expiry: activeCard.expiry,
                         isMaster: activeCard.isMaster,
-                    amount: activeCard.balanceAmount
+                        amount: activeCard.balanceAmount,
                       )
                     : VirtualCardBack(cvc: activeCard.cvc),
               ),

@@ -38,6 +38,10 @@ class _VirtualCardUIState extends State<VirtualCardUI> {
 
   @override
   Widget build(BuildContext context) {
+    var amountVisibility = Provider.of<VirtualCardData>(
+      context,
+      listen: false,
+    ).getCardAmountVisibility(widget.id);
     return Stack(
       children: [
         // Card Type
@@ -73,7 +77,7 @@ class _VirtualCardUIState extends State<VirtualCardUI> {
             children: [
               //Card Amount
               Text(
-                showAmount ? 'N${widget.amount}' : '*****',
+                amountVisibility ? 'N${widget.amount}' : '*****',
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
@@ -84,7 +88,7 @@ class _VirtualCardUIState extends State<VirtualCardUI> {
               IconButton(
                 onPressed: () => _toggleShowAmount(),
                 icon: Icon(
-                  showAmount
+                  amountVisibility
                       ? Icons.visibility_outlined
                       : Icons.visibility_off_outlined,
                   color: Colors.white,
