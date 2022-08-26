@@ -150,11 +150,11 @@ class _WithdrawState extends State<Withdraw> {
       var account = bankAccounts[currentBank]['number'];
       if (double.parse(_amountController.text) > balance) {
         message =
-            'Your funds has been processed to $bankName $account. You should receive it any moment';
+            'Your funds can not be processed to $bankName $account. Due to insufficient balance';
         status = false;
       } else {
         message =
-            'Your funds can not be processed to $bankName $account. Due to insufficient balance';
+            'Your funds has been processed to $bankName $account. You should receive it any moment';
         status = true;
 
         // withdraw from balance

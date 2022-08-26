@@ -1,3 +1,4 @@
+import 'package:fintech_app_ui/screens/other/subscription_details.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../components/kContainer.dart';
@@ -93,22 +94,30 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                     padding: EdgeInsets.zero,
                     itemCount: subscriptionData.getSubscriptions().length,
                     itemBuilder: (context, index) {
-                      var todayHistory =
+                      var sub =
                           subscriptionData.getSubscriptions()[index];
                       return Column(
                         children: [
-                          ListTile(
-                            leading: Image.asset(todayHistory.imgAsset),
-                            title: Text(
-                              todayHistory.title,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w500,
-                              ),
+                          GestureDetector(
+                            onTap: () => Navigator.of(
+                              context,
+                            ).pushNamed(
+                              SubscriptionDetails.routeName,
+                              arguments: {'id': sub.id},
                             ),
-                            trailing: Text(
-                              'N${todayHistory.amount}',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w500,
+                            child: ListTile(
+                              leading: Image.asset(sub.imgAsset),
+                              title: Text(
+                                sub.title,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              trailing: Text(
+                                'N${sub.amount}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
                           ),
