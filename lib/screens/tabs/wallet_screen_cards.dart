@@ -83,6 +83,7 @@ class _CardsTabState extends State<CardsTab> {
               onTap: () => displayCard(cards[index].id, context),
               child: Center(
                 child: VirtualCardUI(
+                  id:cards[index].id,
                   cardColor: cards[index].cardColor,
                   cardName: cards[index].cardName,
                   cardNumber: cards[index].cardNumber,

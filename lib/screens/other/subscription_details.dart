@@ -248,6 +248,7 @@ class _SubscriptionDetailsState extends State<SubscriptionDetails> {
                 child: Center(
                   child: cardFront
                       ? VirtualCardUI(
+                      id: activeCard.id,
                           cardColor: activeCard.cardColor,
                           cardName: activeCard.cardName,
                           cardNumber: activeCard.cardNumber,

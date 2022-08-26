@@ -93,6 +93,14 @@ class VirtualCardData extends ChangeNotifier {
     notifyListeners();
   }
 
+  toggleCardAmountVisibility(String id){
+   var card =  _cards.firstWhere(
+          (card) => card.id == id,
+    );
+   card.toggleCardAmountVisibility();
+   notifyListeners();
+  }
+
   getActiveCardPin(){
     var card = _cards.firstWhere(
           (card) => card.isActive == true,

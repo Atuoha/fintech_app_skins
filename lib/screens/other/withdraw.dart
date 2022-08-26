@@ -19,12 +19,7 @@ class Withdraw extends StatefulWidget {
   State<Withdraw> createState() => _WithdrawState();
 }
 
-enum Field {
-  pin,
-  amount,
-  accountNumber,
-  accountName,
-}
+enum Field { pin, amount, accountNumber, accountName, bank, withdrawSource }
 
 class _WithdrawState extends State<Withdraw> {
   final _formKey = GlobalKey<FormState>();
@@ -161,7 +156,6 @@ class _WithdrawState extends State<Withdraw> {
       if (cardPin != _pinController.text) {
         // show snackBar
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          duration: const Duration(seconds: 20),
           content: const Text(
             'Pin Incorrect',
             style: TextStyle(
@@ -186,13 +180,15 @@ class _WithdrawState extends State<Withdraw> {
         var bankName = bankAccounts[currentBank]['name'];
         var account = bankAccounts[currentBank]['number'];
         // ignore: prefer_typing_uninitialized_variables
-        var balanceFrom;
-        switch(currentWithdrawSource){
+        var balanceFrom; // for obtaining where the available balance will be from
+        var isFromAccountBalance = true;
+        switch (currentWithdrawSource) {
           case 'Available Balance':
             balanceFrom = accountBalance;
             break;
           case 'Active Card':
             balanceFrom = activeCardBalance;
+            isFromAccountBalance = false;
             break;
         }
 
@@ -202,16 +198,26 @@ class _WithdrawState extends State<Withdraw> {
           status = false;
         } else {
           message =
-              'Your funds has been processed to $bankName $account. You should receive it any moment';
+              'Your funds has been processed to $bankName $account and was debit from $currentWithdrawSource. You should receive it any moment';
           status = true;
 
-          // debit from active card
-          Provider.of<VirtualCardData>(
-            context,
-            listen: false,
-          ).debitActiveCard(
-            double.parse(_amountController.text),
-          );
+          isFromAccountBalance
+              ?
+              // debit from account balance
+              Provider.of<VirtualCardData>(
+                  context,
+                  listen: false,
+                ).withdrawFromBalance(
+                  double.parse(_amountController.text),
+                )
+              :
+              // debit from active card
+              Provider.of<VirtualCardData>(
+                  context,
+                  listen: false,
+                ).debitActiveCard(
+                  double.parse(_amountController.text),
+                );
         }
 
         // timer
@@ -385,10 +391,7 @@ class _WithdrawState extends State<Withdraw> {
 
   // custom dropdown for card types and card color
   Widget kDropDownField(
-    String title,
-    String dataValue,
-    List<String> list,
-  ) {
+      String title, String dataValue, List<String> list, Field field) {
     return DropdownButtonFormField(
       decoration: InputDecoration(
         label: Text(
@@ -423,6 +426,18 @@ class _WithdrawState extends State<Withdraw> {
           .toList(),
       onChanged: (value) {
         setState(() {
+          switch (field) {
+            case Field.bank:
+              setState(() {
+                currentBankName = value.toString();
+              });
+              break;
+            case Field.withdrawSource:
+              setState(() {
+                currentWithdrawSource = value.toString();
+              });
+              break;
+          }
           dataValue = value.toString();
         });
       },
@@ -453,11 +468,7 @@ class _WithdrawState extends State<Withdraw> {
                 ),
               ),
               const SizedBox(height: 20),
-              kDropDownField(
-                'Bank Name',
-                currentBankName,
-                _banks,
-              ),
+              kDropDownField('Bank Name', currentBankName, _banks, Field.bank),
               const SizedBox(height: 10),
               kTextField(
                 _accountNumber,
@@ -602,6 +613,7 @@ class _WithdrawState extends State<Withdraw> {
                   'Withdrawal Source',
                   currentWithdrawSource,
                   _withdrawSources,
+                  Field.withdrawSource,
                 ),
                 const SizedBox(height: 20),
                 kTextField(

@@ -9,6 +9,7 @@ class VirtualCard {
   final int cvc;
   double balanceAmount;
   bool isActive;
+  bool amountVisibility;
 
   VirtualCard({
     required this.id,
@@ -21,10 +22,15 @@ class VirtualCard {
     this.balanceAmount = 0.0,
     required this.cvc,
     this.isActive = false,
+    this.amountVisibility = true,
   });
 
   toggleIsActive(){
     isActive = !isActive;
+  }
+
+  toggleCardAmountVisibility(){
+    amountVisibility = !amountVisibility;
   }
 
   switchOffIsActive(){

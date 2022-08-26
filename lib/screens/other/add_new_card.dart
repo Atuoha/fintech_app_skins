@@ -322,6 +322,7 @@ class AddNewCardState extends State<AddNewCard> {
                 child: Center(
                   child: cardFront
                       ? VirtualCardUI(
+                    id: '',
                           cardColor: currentCardColor,
                           cardName: 'Ujunwa Peace',
                           cardNumber: '6786 5435 8907 3424',

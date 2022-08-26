@@ -70,7 +70,6 @@ class _FundCardState extends State<FundCard> {
       if (userPassword != _passwordController.text) {
         // show snackBar
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          duration: const Duration(seconds: 20),
           content: const Text(
             'Password Incorrect',
             style: TextStyle(

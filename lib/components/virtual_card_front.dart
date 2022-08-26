@@ -1,8 +1,11 @@
+import 'package:fintech_app_ui/providers/virtual_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class VirtualCardUI extends StatefulWidget {
   const VirtualCardUI({
     Key? key,
+    required this.id,
     required this.cardColor,
     required this.cardName,
     required this.cardNumber,
@@ -10,6 +13,7 @@ class VirtualCardUI extends StatefulWidget {
     required this.isMaster,
     required this.amount,
   }) : super(key: key);
+  final String id;
   final String cardColor;
   final String cardName;
   final bool isMaster;
@@ -26,10 +30,10 @@ class _VirtualCardUIState extends State<VirtualCardUI> {
 
   // toggle show amount
   _toggleShowAmount() {
-    setState((){
-      showAmount = !showAmount;
-    });
-
+    Provider.of<VirtualCardData>(
+      context,
+      listen: false,
+    ).toggleCardAmountVisibility(widget.id);
   }
 
   @override
@@ -75,7 +79,6 @@ class _VirtualCardUIState extends State<VirtualCardUI> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-
 
               // Show Amount Operation
               IconButton(

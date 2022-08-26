@@ -67,6 +67,7 @@ class _CardBottomSheetState extends State<CardBottomSheet> {
           child: Center(
             child: cardFront
                 ? VirtualCardUI(
+              id: widget.card.id,
                     cardColor: widget.card.cardColor,
                     cardName: widget.card.cardName,
                     cardNumber: widget.card.cardNumber,
