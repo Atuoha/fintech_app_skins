@@ -72,6 +72,7 @@ class _CardBottomSheetState extends State<CardBottomSheet> {
                     cardNumber: widget.card.cardNumber,
                     expiry: widget.card.expiry,
                     isMaster: widget.card.isMaster,
+                    amount: widget.card.balanceAmount
                   )
                 : VirtualCardBack(cvc: widget.card.cvc),
           ),

@@ -323,6 +323,7 @@ class AddNewCardState extends State<AddNewCard> {
                           cardName: 'Ujunwa Peace',
                           cardNumber: '6786 5435 8907 3424',
                           expiry: '08/26',
+                          amount: 0.0,
                           isMaster:
                               currentCardType == 'Mastercard' ? true : false,
                         )

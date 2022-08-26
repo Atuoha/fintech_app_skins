@@ -77,6 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         cardNumber: activeCard.cardNumber,
                         expiry: activeCard.expiry,
                         isMaster: activeCard.isMaster,
+                    amount: activeCard.balanceAmount
                       )
                     : VirtualCardBack(cvc: activeCard.cvc),
               ),

@@ -88,6 +88,7 @@ class _CardsTabState extends State<CardsTab> {
                   cardNumber: cards[index].cardNumber,
                   expiry: cards[index].expiry,
                   isMaster: cards[index].isMaster,
+                    amount: cards[index].balanceAmount
                 ),
               ),
             ),

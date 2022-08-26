@@ -253,6 +253,7 @@ class _SubscriptionDetailsState extends State<SubscriptionDetails> {
                           cardNumber: activeCard.cardNumber,
                           expiry: activeCard.expiry,
                           isMaster: activeCard.isMaster,
+                      amount: activeCard.balanceAmount
                         )
                       : VirtualCardBack(cvc: activeCard.cvc),
                 ),

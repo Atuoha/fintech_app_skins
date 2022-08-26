@@ -63,7 +63,7 @@ class _FundCardState extends State<FundCard> {
       var balance = Provider.of<VirtualCardData>(
         context,
         listen: false,
-      ).getBalance();
+      ).getActiveCardPin();
 
       var msg =
           'Your card has been funded. Debit will be through $currentSource.';
