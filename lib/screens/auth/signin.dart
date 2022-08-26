@@ -111,6 +111,9 @@ class _SigninState extends State<Signin> {
     if (!valid) {
       return null;
     } else {
+      // Un-focus Keyboard
+      FocusScope.of(context).unfocus();
+
       setState(() {
         loading = true;
       });

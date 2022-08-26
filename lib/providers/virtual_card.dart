@@ -6,6 +6,13 @@ class VirtualCardData extends ChangeNotifier {
   //balance
   double balance  = 900000;
 
+  // dummy user password  TODO: This will later implemented using auth provider
+  var password = 'anthony123';
+
+  getUserPassword(){
+    return password;
+  }
+
   getBalance(){
     return balance;
   }
@@ -91,6 +98,13 @@ class VirtualCardData extends ChangeNotifier {
           (card) => card.isActive == true,
     );
     return card.pin;
+  }
+
+  getActiveCardBalance(){
+    var card = _cards.firstWhere(
+          (card) => card.isActive == true,
+    );
+    return card.balanceAmount;
   }
 
   List<VirtualCard> getInActiveCards() {

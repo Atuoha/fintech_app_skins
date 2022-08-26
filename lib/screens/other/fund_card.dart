@@ -53,39 +53,72 @@ class _FundCardState extends State<FundCard> {
     } else {
       //TODO: Implement Funding
 
-      // isLoad action
+      // Un-focus Keyboard
+      FocusScope.of(context).unfocus();
 
+      // isLoad action
       setState(() {
         isLoading = true;
       });
 
-      // active card pin
-      var balance = Provider.of<VirtualCardData>(
+      // user password TODO: This will later implemented using auth provider
+      var userPassword = Provider.of<VirtualCardData>(
         context,
         listen: false,
-      ).getActiveCardPin();
+      ).getUserPassword();
 
-      var msg =
-          'Your card has been funded. Debit will be through $currentSource.';
-      Timer(const Duration(seconds: 5), () {
-        Provider.of<VirtualCardData>(
-          context,
-          listen: false,
-        ).fundAccount(
-          double.parse(_amountController.text),
-        );
-
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => ResponseScreen(
-              successStatus: true,
-              message: msg,
-              amount: double.parse(_amountController.text),
-              transId: 'swift-$transId',
+      if (userPassword != _passwordController.text) {
+        // show snackBar
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          duration: const Duration(seconds: 20),
+          content: const Text(
+            'Password Incorrect',
+            style: TextStyle(
+              color: Colors.white,
             ),
           ),
-        );
-      });
+          backgroundColor: primaryColor,
+          action: SnackBarAction(
+            onPressed: () => {},
+            label: 'Dismiss',
+            textColor: masterYellow,
+          ),
+        ));
+
+        //reset loading
+        setState(() {
+          isLoading = false;
+        });
+      } else {
+        var msg =
+            'Your card has been funded. Debit will be through $currentSource.';
+        Timer(const Duration(seconds: 5), () {
+          Provider.of<VirtualCardData>(
+            context,
+            listen: false,
+          ).fundActiveCard(
+            double.parse(_amountController.text),
+          );
+
+          Provider.of<VirtualCardData>(
+            context,
+            listen: false,
+          ).withdrawFromBalance(
+            double.parse(_amountController.text),
+          );
+
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ResponseScreen(
+                successStatus: true,
+                message: msg,
+                amount: double.parse(_amountController.text),
+                transId: 'swift-$transId',
+              ),
+            ),
+          );
+        });
+      }
     }
   }
 

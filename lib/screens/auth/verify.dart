@@ -46,6 +46,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
     if (!valid) {
       return null;
     } else {
+      // Un-focus Keyboard
+      FocusScope.of(context).unfocus();
+
       setState(() {
         loading = true;
       });

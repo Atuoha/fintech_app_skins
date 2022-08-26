@@ -205,6 +205,9 @@ class AddNewCardState extends State<AddNewCard> {
     if (!valid) {
       return null;
     } else {
+      // Un-focus Keyboard
+      FocusScope.of(context).unfocus();
+
       setState(() {
         isLoading = true;
       });
