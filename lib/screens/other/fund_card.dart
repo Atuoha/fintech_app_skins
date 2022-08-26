@@ -10,13 +10,13 @@ import 'package:provider/provider.dart';
 import '../../components/balance_container.dart';
 import '../../constants/color.dart';
 
-class FundWallet extends StatefulWidget {
+class FundCard extends StatefulWidget {
   static const routeName = '/fundwallet';
 
-  const FundWallet({Key? key}) : super(key: key);
+  const FundCard({Key? key}) : super(key: key);
 
   @override
-  State<FundWallet> createState() => _FundWalletState();
+  State<FundCard> createState() => _FundCardState();
 }
 
 enum Field {
@@ -24,7 +24,7 @@ enum Field {
   amount,
 }
 
-class _FundWalletState extends State<FundWallet> {
+class _FundCardState extends State<FundCard> {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
   final _amountController = TextEditingController();
@@ -59,8 +59,14 @@ class _FundWalletState extends State<FundWallet> {
         isLoading = true;
       });
 
+      // active card pin
+      var balance = Provider.of<VirtualCardData>(
+        context,
+        listen: false,
+      ).getBalance();
+
       var msg =
-          'Your funds has been processed. Debit will be from through $currentSource.';
+          'Your card has been funded. Debit will be through $currentSource.';
       Timer(const Duration(seconds: 5), () {
         Provider.of<VirtualCardData>(
           context,
@@ -214,7 +220,7 @@ class _FundWalletState extends State<FundWallet> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text(
-          'Fund Wallet',
+          'Fund Card',
           style: TextStyle(
             fontWeight: FontWeight.w600,
             color: primaryColor,

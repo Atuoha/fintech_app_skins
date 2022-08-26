@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../components/kContainer.dart';
 import '../../constants/color.dart';
 import '../other/add_new_card.dart';
-import '../other/fund_wallet.dart';
+import '../other/fund_card.dart';
 import '../tabs/wallet_screen_transactions.dart';
 
 class WalletScreen extends StatefulWidget {
@@ -92,11 +92,11 @@ class _WalletScreenState extends State<WalletScreen> {
                   ),
                   GestureDetector(
                     onTap: () =>
-                        Navigator.of(context).pushNamed(FundWallet.routeName),
+                        Navigator.of(context).pushNamed(FundCard.routeName),
                     child: const KContainer(
                       iconBg: Colors.green,
                       color: fundWalletBg,
-                      text: 'Fund Wallet',
+                      text: 'Fund Card',
                       icon: Icons.local_atm,
                     ),
                   ),

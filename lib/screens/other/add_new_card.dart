@@ -217,6 +217,7 @@ class AddNewCardState extends State<AddNewCard> {
       cardColor: currentCardColor,
       cardName: 'Ujunwa Peace',
       expiry: '03/26',
+      pin: _pinController.text,
       cardNumber: '0980 9687 2423 2343 ',
       cvc: cvc,
     );

@@ -5,7 +5,9 @@ class VirtualCard {
   final bool isMaster;
   final String expiry;
   final String cardNumber;
+  final String pin;
   final int cvc;
+  double balanceAmount;
   bool isActive;
 
   VirtualCard({
@@ -13,8 +15,10 @@ class VirtualCard {
     required this.cardColor,
     required this.cardName,
     this.isMaster = true,
+    required this.pin,
     required this.expiry,
     required this.cardNumber,
+    this.balanceAmount = 0.0,
     required this.cvc,
     this.isActive = false,
   });
@@ -25,5 +29,13 @@ class VirtualCard {
 
   switchOffIsActive(){
     isActive = false;
+  }
+
+  creditCard(double amount){
+    balanceAmount += amount;
+  }
+
+  debitCard(double amount){
+    balanceAmount -= amount;
   }
 }

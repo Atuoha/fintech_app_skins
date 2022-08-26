@@ -10,10 +10,14 @@ class VirtualCardData extends ChangeNotifier {
     return balance;
   }
 
+
+
   withdrawFromBalance(double amount){
     balance -= amount;
     notifyListeners();
   }
+
+
 
   fundAccount(double amount){
     balance += amount;
@@ -37,11 +41,13 @@ class VirtualCardData extends ChangeNotifier {
     );
   }
 
+
   addCard(VirtualCard vCard) {
     var card = VirtualCard(
       id: DateTime.now().toString(),
       cardColor: vCard.cardColor,
       cardName: vCard.cardName,
+      pin: vCard.pin,
       expiry: vCard.expiry,
       cardNumber: vCard.cardNumber,
       cvc: vCard.cvc,
@@ -64,6 +70,29 @@ class VirtualCardData extends ChangeNotifier {
     );
   }
 
+  fundActiveCard(double amount){
+    var card = _cards.firstWhere(
+          (card) => card.isActive == true,
+    );
+    card.creditCard(amount);
+    notifyListeners();
+  }
+
+  debitActiveCard(double amount){
+    var card = _cards.firstWhere(
+          (card) => card.isActive == true,
+    );
+    card.debitCard(amount);
+    notifyListeners();
+  }
+
+  getActiveCardPin(){
+    var card = _cards.firstWhere(
+          (card) => card.isActive == true,
+    );
+    return card.pin;
+  }
+
   List<VirtualCard> getInActiveCards() {
     return _cards
         .where(
@@ -82,6 +111,7 @@ class VirtualCardData extends ChangeNotifier {
       cardColor: 'red',
       cardName: 'Ujunwa Peace',
       cardNumber: '1834 8905 5435 8654',
+      pin: '8478',
       expiry: '09/25',
       cvc: 345,
       isActive: true,
@@ -92,6 +122,7 @@ class VirtualCardData extends ChangeNotifier {
       cardName: 'Ujunwa Peace',
       cardNumber: '7898 4332 9834 3454',
       expiry: '08/24',
+      pin: '4577',
       cvc: 765,
       isMaster: false,
     ),
@@ -100,6 +131,7 @@ class VirtualCardData extends ChangeNotifier {
       cardColor: 'blue',
       cardName: 'Ujunwa Peace',
       cardNumber: '3608 2562 1574 4721',
+      pin:'6788',
       expiry: '08/25',
       cvc: 155,
     )

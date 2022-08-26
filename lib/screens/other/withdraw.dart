@@ -157,11 +157,11 @@ class _WithdrawState extends State<Withdraw> {
             'Your funds has been processed to $bankName $account. You should receive it any moment';
         status = true;
 
-        // withdraw from balance
+        // debit from active card
         Provider.of<VirtualCardData>(
           context,
           listen: false,
-        ).withdrawFromBalance(
+        ).debitActiveCard(
           double.parse(_amountController.text),
         );
       }
