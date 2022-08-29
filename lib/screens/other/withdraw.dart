@@ -19,13 +19,7 @@ class Withdraw extends StatefulWidget {
   State<Withdraw> createState() => _WithdrawState();
 }
 
-enum Field {
-  password,
-  pin,
-  amount,
-  accountNumber,
-  accountName,
-}
+enum Field { pin, amount, accountNumber, accountName, bank, withdrawSource }
 
 class _WithdrawState extends State<Withdraw> {
   final _formKey = GlobalKey<FormState>();
@@ -35,17 +29,17 @@ class _WithdrawState extends State<Withdraw> {
   final _amountController = TextEditingController();
   final _accountNumber = TextEditingController();
   final _accountName = TextEditingController();
-  var passwordObscure = true;
   var pinObscure = true;
   var currentBank = 0;
-  var currentBankName = 'Select Bank';
+  var currentBankName = 'Access Diamond';
   var isLoading = false;
   final double kSize = 100;
-
   var transId = Random().nextInt(888);
 
+  final _withdrawSources = ['Available Balance', 'Active Card'];
+  var currentWithdrawSource = 'Available Balance';
+
   final _banks = [
-    'Select Bank',
     'Access Diamond',
     'Access',
     'Fidelity',
@@ -134,51 +128,112 @@ class _WithdrawState extends State<Withdraw> {
     if (!valid) {
       return null;
     } else {
+      // Un-focus Keyboard
+      FocusScope.of(context).unfocus();
+
       setState(() {
         isLoading = true;
       });
 
-      // balance holding balance from provider
-      var balance = Provider.of<VirtualCardData>(
+      // active card pin
+      var cardPin = Provider.of<VirtualCardData>(
+        context,
+        listen: false,
+      ).getActiveCardPin();
+
+      // holding balance
+      var accountBalance = Provider.of<VirtualCardData>(
         context,
         listen: false,
       ).getBalance();
 
-      var message = '';
-      var status = false;
-      var bankName = bankAccounts[currentBank]['name'];
-      var account = bankAccounts[currentBank]['number'];
-      if (double.parse(_amountController.text) > balance) {
-        message =
-            'Your funds can not be processed to $bankName $account. Due to insufficient balance';
-        status = false;
-      } else {
-        message =
-            'Your funds has been processed to $bankName $account. You should receive it any moment';
-        status = true;
+      // holding active card balance
+      var activeCardBalance = Provider.of<VirtualCardData>(
+        context,
+        listen: false,
+      ).getActiveCardBalance();
 
-        // withdraw from balance
-        Provider.of<VirtualCardData>(
-          context,
-          listen: false,
-        ).withdrawFromBalance(
-          double.parse(_amountController.text),
-        );
-      }
-
-      // timer
-      Timer(const Duration(seconds: 5), () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => ResponseScreen(
-              successStatus: status,
-              message: message,
-              amount: double.parse(_amountController.text),
-              transId: 'swift-$transId',
+      if (cardPin != _pinController.text) {
+        // show snackBar
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text(
+            'Pin Incorrect',
+            style: TextStyle(
+              color: Colors.white,
             ),
           ),
-        );
-      });
+          backgroundColor: primaryColor,
+          action: SnackBarAction(
+            onPressed: () => {},
+            label: 'Dismiss',
+            textColor: masterYellow,
+          ),
+        ));
+
+        //reset loading
+        setState(() {
+          isLoading = false;
+        });
+      } else {
+        var message = '';
+        var status = false;
+        var bankName = bankAccounts[currentBank]['name'];
+        var account = bankAccounts[currentBank]['number'];
+        // ignore: prefer_typing_uninitialized_variables
+        var balanceFrom; // for obtaining where the available balance will be from
+        var isFromAccountBalance = true;
+        switch (currentWithdrawSource) {
+          case 'Available Balance':
+            balanceFrom = accountBalance;
+            break;
+          case 'Active Card':
+            balanceFrom = activeCardBalance;
+            isFromAccountBalance = false;
+            break;
+        }
+
+        if (double.parse(_amountController.text) > balanceFrom) {
+          message =
+              'Your funds can not be processed to $bankName $account. Due to insufficient balance from $currentWithdrawSource';
+          status = false;
+        } else {
+          message =
+              'Your funds has been processed to $bankName $account and was debit from $currentWithdrawSource. You should receive it any moment';
+          status = true;
+
+          isFromAccountBalance
+              ?
+              // debit from account balance
+              Provider.of<VirtualCardData>(
+                  context,
+                  listen: false,
+                ).withdrawFromBalance(
+                  double.parse(_amountController.text),
+                )
+              :
+              // debit from active card
+              Provider.of<VirtualCardData>(
+                  context,
+                  listen: false,
+                ).debitActiveCard(
+                  double.parse(_amountController.text),
+                );
+        }
+
+        // timer
+        Timer(const Duration(seconds: 5), () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ResponseScreen(
+                successStatus: status,
+                message: message,
+                amount: double.parse(_amountController.text),
+                transId: 'swift-$transId',
+              ),
+            ),
+          );
+        });
+      }
     }
   }
 
@@ -266,15 +321,6 @@ class _WithdrawState extends State<Withdraw> {
           field == Field.pin ? TextInputAction.done : TextInputAction.next,
       validator: (value) {
         switch (field) {
-          case Field.password:
-            if (value!.length < 8) {
-              return 'Password is not strong';
-            }
-            if (value.isEmpty) {
-              return 'Password can not be empty';
-            }
-            break;
-
           case Field.pin:
             if (value!.length < 3 || value.length > 4) {
               return 'Pin must be 4 characters';
@@ -306,15 +352,11 @@ class _WithdrawState extends State<Withdraw> {
         return null;
       },
       decoration: InputDecoration(
-        suffixIcon: field == Field.password || field == Field.pin
+        suffixIcon: field == Field.pin
             ? controller.text.isNotEmpty
                 ? IconButton(
                     onPressed: () => setState(() {
-                      if (field == Field.password) {
-                        passwordObscure = !passwordObscure;
-                      } else {
-                        pinObscure = !pinObscure;
-                      }
+                      pinObscure = !pinObscure;
                     }),
                     icon: Icon(
                       obscure ? Icons.visibility : Icons.visibility_off,
@@ -347,6 +389,61 @@ class _WithdrawState extends State<Withdraw> {
     );
   }
 
+  // custom dropdown for card types and card color
+  Widget kDropDownField(
+      String title, String dataValue, List<String> list, Field field) {
+    return DropdownButtonFormField(
+      decoration: InputDecoration(
+        label: Text(
+          title,
+          style: const TextStyle(
+            color: primaryColor,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            width: 1,
+            color: primaryColor,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            width: 1,
+            color: greyShade2,
+          ),
+        ),
+      ),
+      value: dataValue,
+      items: list
+          .map(
+            (data) => DropdownMenuItem(
+              value: data,
+              child: Text(data),
+            ),
+          )
+          .toList(),
+      onChanged: (value) {
+        setState(() {
+          switch (field) {
+            case Field.bank:
+              setState(() {
+                currentBankName = value.toString();
+              });
+              break;
+            case Field.withdrawSource:
+              setState(() {
+                currentWithdrawSource = value.toString();
+              });
+              break;
+          }
+          dataValue = value.toString();
+        });
+      },
+    );
+  }
+
   // dropdown add bank
   addBankDropDown() {
     return showModalBottomSheet(
@@ -371,44 +468,7 @@ class _WithdrawState extends State<Withdraw> {
                 ),
               ),
               const SizedBox(height: 20),
-              DropdownButtonFormField(
-                decoration: InputDecoration(
-                  label: const Text(
-                    'Bank Name',
-                    style: TextStyle(
-                      color: primaryColor,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      width: 1,
-                      color: primaryColor,
-                    ),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      width: 1,
-                      color: greyShade2,
-                    ),
-                  ),
-                ),
-                value: currentBankName,
-                items: _banks
-                    .map(
-                      (data) => DropdownMenuItem(
-                        value: data,
-                        child: Text(data),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    currentBankName = value.toString();
-                  });
-                },
-              ),
+              kDropDownField('Bank Name', currentBankName, _banks, Field.bank),
               const SizedBox(height: 10),
               kTextField(
                 _accountNumber,
@@ -549,11 +609,11 @@ class _WithdrawState extends State<Withdraw> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                kTextField(
-                  _passwordController,
-                  'Password',
-                  passwordObscure,
-                  Field.password,
+                kDropDownField(
+                  'Withdrawal Source',
+                  currentWithdrawSource,
+                  _withdrawSources,
+                  Field.withdrawSource,
                 ),
                 const SizedBox(height: 20),
                 kTextField(

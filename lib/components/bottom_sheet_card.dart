@@ -55,8 +55,11 @@ class _CardBottomSheetState extends State<CardBottomSheet> {
 
     // terminate card
     _terminate() {
-      cardProvider.deleteCard(widget.card.id);
       loadingAction();
+      Timer(const Duration(seconds:6),(){
+        cardProvider.deleteCard(widget.card.id);
+      });
+
     }
 
     return Column(
@@ -67,11 +70,13 @@ class _CardBottomSheetState extends State<CardBottomSheet> {
           child: Center(
             child: cardFront
                 ? VirtualCardUI(
+              id: widget.card.id,
                     cardColor: widget.card.cardColor,
                     cardName: widget.card.cardName,
                     cardNumber: widget.card.cardNumber,
                     expiry: widget.card.expiry,
                     isMaster: widget.card.isMaster,
+                    amount: widget.card.balanceAmount
                   )
                 : VirtualCardBack(cvc: widget.card.cvc),
           ),

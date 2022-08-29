@@ -10,13 +10,13 @@ import 'package:provider/provider.dart';
 import '../../components/balance_container.dart';
 import '../../constants/color.dart';
 
-class FundWallet extends StatefulWidget {
+class FundCard extends StatefulWidget {
   static const routeName = '/fundwallet';
 
-  const FundWallet({Key? key}) : super(key: key);
+  const FundCard({Key? key}) : super(key: key);
 
   @override
-  State<FundWallet> createState() => _FundWalletState();
+  State<FundCard> createState() => _FundCardState();
 }
 
 enum Field {
@@ -24,7 +24,7 @@ enum Field {
   amount,
 }
 
-class _FundWalletState extends State<FundWallet> {
+class _FundCardState extends State<FundCard> {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
   final _amountController = TextEditingController();
@@ -53,33 +53,71 @@ class _FundWalletState extends State<FundWallet> {
     } else {
       //TODO: Implement Funding
 
-      // isLoad action
+      // Un-focus Keyboard
+      FocusScope.of(context).unfocus();
 
+      // isLoad action
       setState(() {
         isLoading = true;
       });
 
-      var msg =
-          'Your funds has been processed. Debit will be from through $currentSource.';
-      Timer(const Duration(seconds: 5), () {
-        Provider.of<VirtualCardData>(
-          context,
-          listen: false,
-        ).fundAccount(
-          double.parse(_amountController.text),
-        );
+      // user password TODO: This will later implemented using auth provider
+      var userPassword = Provider.of<VirtualCardData>(
+        context,
+        listen: false,
+      ).getUserPassword();
 
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => ResponseScreen(
-              successStatus: true,
-              message: msg,
-              amount: double.parse(_amountController.text),
-              transId: 'swift-$transId',
+      if (userPassword != _passwordController.text) {
+        // show snackBar
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text(
+            'Password Incorrect',
+            style: TextStyle(
+              color: Colors.white,
             ),
           ),
-        );
-      });
+          backgroundColor: primaryColor,
+          action: SnackBarAction(
+            onPressed: () => {},
+            label: 'Dismiss',
+            textColor: masterYellow,
+          ),
+        ));
+
+        //reset loading
+        setState(() {
+          isLoading = false;
+        });
+      } else {
+        var msg =
+            'Your card has been funded. Debit will be through $currentSource.';
+        Timer(const Duration(seconds: 5), () {
+          Provider.of<VirtualCardData>(
+            context,
+            listen: false,
+          ).fundActiveCard(
+            double.parse(_amountController.text),
+          );
+
+          Provider.of<VirtualCardData>(
+            context,
+            listen: false,
+          ).withdrawFromBalance(
+            double.parse(_amountController.text),
+          );
+
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ResponseScreen(
+                successStatus: true,
+                message: msg,
+                amount: double.parse(_amountController.text),
+                transId: 'swift-$transId',
+              ),
+            ),
+          );
+        });
+      }
     }
   }
 
@@ -214,7 +252,7 @@ class _FundWalletState extends State<FundWallet> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text(
-          'Fund Wallet',
+          'Fund Card',
           style: TextStyle(
             fontWeight: FontWeight.w600,
             color: primaryColor,

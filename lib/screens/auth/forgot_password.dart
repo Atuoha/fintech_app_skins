@@ -22,6 +22,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   final double kSize = 100;
 
   _submitForm(BuildContext context) {
+    // Un-focus Keyboard
+    FocusScope.of(context).unfocus();
+
     setState(() {
       loading = true;
     });

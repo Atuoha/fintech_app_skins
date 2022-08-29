@@ -205,6 +205,9 @@ class AddNewCardState extends State<AddNewCard> {
     if (!valid) {
       return null;
     } else {
+      // Un-focus Keyboard
+      FocusScope.of(context).unfocus();
+
       setState(() {
         isLoading = true;
       });
@@ -217,6 +220,7 @@ class AddNewCardState extends State<AddNewCard> {
       cardColor: currentCardColor,
       cardName: 'Ujunwa Peace',
       expiry: '03/26',
+      pin: _pinController.text,
       cardNumber: '0980 9687 2423 2343 ',
       cvc: cvc,
     );
@@ -318,10 +322,12 @@ class AddNewCardState extends State<AddNewCard> {
                 child: Center(
                   child: cardFront
                       ? VirtualCardUI(
+                          id: '1',
                           cardColor: currentCardColor,
                           cardName: 'Ujunwa Peace',
                           cardNumber: '6786 5435 8907 3424',
                           expiry: '08/26',
+                          amount: 0.0,
                           isMaster:
                               currentCardType == 'Mastercard' ? true : false,
                         )

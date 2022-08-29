@@ -4,7 +4,7 @@ import 'package:fintech_app_ui/screens/auth/signup.dart';
 import 'package:fintech_app_ui/screens/auth/verify.dart';
 import 'package:fintech_app_ui/screens/main/bottom_nav.dart';
 import 'package:fintech_app_ui/screens/other/add_new_card.dart';
-import 'package:fintech_app_ui/screens/other/fund_wallet.dart';
+import 'package:fintech_app_ui/screens/other/fund_card.dart';
 import 'package:fintech_app_ui/screens/other/response_screen.dart';
 import 'package:fintech_app_ui/screens/other/subscription_details.dart';
 import 'package:fintech_app_ui/screens/other/withdraw.dart';
@@ -18,7 +18,7 @@ var routes = {
   ForgotPassword.routeName: (context) => const ForgotPassword(),
   BottomNav.routeName: (context) => const BottomNav(),
   AddNewCard.routeName: (context) => const AddNewCard(),
-  FundWallet.routeName: (context) => const FundWallet(),
+  FundCard.routeName: (context) => const FundCard(),
   SubscriptionDetails.routeName: (context) => const SubscriptionDetails(),
   Withdraw.routeName: (context) => const Withdraw(),
 
