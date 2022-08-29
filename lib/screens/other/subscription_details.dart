@@ -59,47 +59,77 @@ class _SubscriptionDetailsState extends State<SubscriptionDetails> {
         isLoading = true;
       });
 
-      // balance holding balance from provider
-      var balance = Provider.of<VirtualCardData>(
+      // active card pin
+      var cardPin = Provider.of<VirtualCardData>(
         context,
         listen: false,
-      ).getBalance();
+      ).getActiveCardPin();
 
-      var message = '';
-      var status = false;
-      var amountParsed = double.parse(amount.toString());
+      // holding active card balance
+      var activeCardBalance = Provider.of<VirtualCardData>(
+        context,
+        listen: false,
+      ).getActiveCardBalance();
 
-      if (amountParsed > balance) {
-        message =
-            'Your subscription for $service can not be confirmed. Due to insufficient balance';
-        status = false;
-      } else {
-        message =
-            'Your subscription for $service has been confirmed. You should receive a notification any moment';
-        status = true;
-
-        // withdraw from balance
-        Provider.of<VirtualCardData>(
-          context,
-          listen: false,
-        ).withdrawFromBalance(
-          amountParsed,
-        );
-      }
-
-      // timer
-      Timer(const Duration(seconds: 5), () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => ResponseScreen(
-              successStatus: status,
-              message: message,
-              amount: amountParsed,
-              transId: 'swift-$transId',
+      if (cardPin != _pinController.text) {
+        // show snackBar
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text(
+            'Pin Incorrect',
+            style: TextStyle(
+              color: Colors.white,
             ),
           ),
-        );
-      });
+          backgroundColor: primaryColor,
+          action: SnackBarAction(
+            onPressed: () => {},
+            label: 'Dismiss',
+            textColor: masterYellow,
+          ),
+        ));
+
+        //reset loading
+        setState(() {
+          isLoading = false;
+        });
+      }else {
+        var message = '';
+        var status = false;
+        var amountParsed = double.parse(amount.toString());
+
+        if (amountParsed > activeCardBalance) {
+          message =
+          'Your subscription for $service can not be confirmed. Due to insufficient balance';
+          status = false;
+        } else {
+          message =
+          'Your subscription for $service has been confirmed. You should receive a notification any moment';
+          status = true;
+
+          // withdraw from balance
+          Provider.of<VirtualCardData>(
+            context,
+            listen: false,
+          ).debitActiveCard(
+            amountParsed,
+          );
+        }
+
+        // timer
+        Timer(const Duration(seconds: 5), () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) =>
+                  ResponseScreen(
+                    successStatus: status,
+                    message: message,
+                    amount: amountParsed,
+                    transId: 'swift-$transId',
+                  ),
+            ),
+          );
+        });
+      }
     } else {
       return null;
     }

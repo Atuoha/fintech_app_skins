@@ -2,31 +2,26 @@ import 'package:flutter/material.dart';
 import '../model/virtual_card.dart';
 
 class VirtualCardData extends ChangeNotifier {
-
   //balance
-  double balance  = 900000;
+  double balance = 900000;
 
   // dummy user password  TODO: This will later implemented using auth provider
   var password = 'anthony123';
 
-  getUserPassword(){
+  getUserPassword() {
     return password;
   }
 
-  getBalance(){
+  getBalance() {
     return balance;
   }
 
-
-
-  withdrawFromBalance(double amount){
+  withdrawFromBalance(double amount) {
     balance -= amount;
     notifyListeners();
   }
 
-
-
-  fundAccount(double amount){
+  fundAccount(double amount) {
     balance += amount;
     notifyListeners();
   }
@@ -48,7 +43,6 @@ class VirtualCardData extends ChangeNotifier {
     );
   }
 
-
   addCard(VirtualCard vCard) {
     var card = VirtualCard(
       id: DateTime.now().toString(),
@@ -65,9 +59,11 @@ class VirtualCardData extends ChangeNotifier {
   }
 
   deleteCard(String id) {
-    _cards.removeWhere(
-      (card) => card.id == id,
-    );
+    if (_cards.length > 1) {
+      _cards.removeWhere(
+        (card) => card.id == id,
+      );
+    }
     notifyListeners();
   }
 
@@ -77,47 +73,47 @@ class VirtualCardData extends ChangeNotifier {
     );
   }
 
-  fundActiveCard(double amount){
+  fundActiveCard(double amount) {
     var card = _cards.firstWhere(
-          (card) => card.isActive == true,
+      (card) => card.isActive == true,
     );
     card.creditCard(amount);
     notifyListeners();
   }
 
-  debitActiveCard(double amount){
+  debitActiveCard(double amount) {
     var card = _cards.firstWhere(
-          (card) => card.isActive == true,
+      (card) => card.isActive == true,
     );
     card.debitCard(amount);
     notifyListeners();
   }
 
-  toggleCardAmountVisibility(String id){
-   var card =  _cards.firstWhere(
-          (card) => card.id == id,
+  toggleCardAmountVisibility(String id) {
+    var card = _cards.firstWhere(
+      (card) => card.id == id,
     );
-   card.toggleCardAmountVisibility();
-   notifyListeners();
+    card.toggleCardAmountVisibility();
+    notifyListeners();
   }
 
-  getCardAmountVisibility(String id){
-    var card =  _cards.firstWhere(
-          (card) => card.id == id,
+  getCardAmountVisibility(String id) {
+    var card = _cards.firstWhere(
+      (card) => card.id == id,
     );
     return card.amountVisibility;
   }
 
-  getActiveCardPin(){
+  getActiveCardPin() {
     var card = _cards.firstWhere(
-          (card) => card.isActive == true,
+      (card) => card.isActive == true,
     );
     return card.pin;
   }
 
-  getActiveCardBalance(){
+  getActiveCardBalance() {
     var card = _cards.firstWhere(
-          (card) => card.isActive == true,
+      (card) => card.isActive == true,
     );
     return card.balanceAmount;
   }
@@ -160,7 +156,7 @@ class VirtualCardData extends ChangeNotifier {
       cardColor: 'blue',
       cardName: 'Ujunwa Peace',
       cardNumber: '3608 2562 1574 4721',
-      pin:'6788',
+      pin: '6788',
       expiry: '08/25',
       cvc: 155,
     )

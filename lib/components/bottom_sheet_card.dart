@@ -55,8 +55,11 @@ class _CardBottomSheetState extends State<CardBottomSheet> {
 
     // terminate card
     _terminate() {
-      cardProvider.deleteCard(widget.card.id);
       loadingAction();
+      Timer(const Duration(seconds:6),(){
+        cardProvider.deleteCard(widget.card.id);
+      });
+
     }
 
     return Column(
